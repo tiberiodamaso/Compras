@@ -14,7 +14,7 @@
     <!--CARDS-->
     {% for produto in object_list %}
     <div class="container">
-      <div class="card border-0 mb-3">
+      <div class="card border-0 mb-3" onclick="count(this)">
         <div class="row g-0">
           <div class="col-3">
             <img src="https://via.placeholder.com/100/" class="img-fluid rounded-start" alt="...">
@@ -23,32 +23,16 @@
             <div>
               <h5 class="card-title" style="color: #96330F;">{{ produto.nome }}</h5>
               <p class="card-text text-muted fs-6">Atacado | Cozinha</p>
-              <input type="range" class="form-range" min="0" max="100" step="1" id="customRange3">
+              <input type="range" class="form-range" min="0" max="100" step="1" oninput="range(this)">
             </div>
           </div>
           <div class="col-2">
-            <input id="pro-1" type="text" class="border-1 form-control text-center">
+            <input id="pro-1" type="number" step="1" class="border-1 form-control text-center qtd">
           </div>
         </div>
       </div>
     </div>
     {% endfor %}
+    
   </main>
-  
-  <footer class="footer mt-auto py-3 bg-light">
-    <div class="container">
-      <div class="row">
-        <div class="col text-center">
-          <a href="#" class="text-decoration-none"><i class="fs-1 icofont-chef" style="color: #96330f;"></i></a>
-        </div>
-        <div class="col text-center">
-          <a href="#" class="text-decoration-none"><i class="fs-1 icofont-beer" style="color: #96330f;"></i></a>
-        </div><div class="col text-center">
-        <a href="#" class="text-decoration-none"><i class="fs-1 icofont-culinary" style="color: #96330f;"></i></a>
-      </div><div class="col text-center">
-        <a href="#" class="text-decoration-none"><i class="fs-1 icofont-cocktail" style="color: #96330f;"></i></a>
-      </div></div>
-    </div>
-  </footer>
-
 {% endblock %}
