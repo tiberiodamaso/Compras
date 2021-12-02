@@ -129,12 +129,12 @@ dmypy.json
 .pyre/
 
 produtos/migrations/
-departamentos/migrations/
+lojas/migrations/
 core/migrations/
 
 .idea/
 .xml/
-/departamentos/__init__.py
+/lojas/__init__.py
 /produtos/__init__.py
 /core/__init__.py
-/root/__init__.py
+/config/__init__.py

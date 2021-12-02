@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<body class="d-flex flex-column h-100">
+
+  {% include 'menu.html' %}
+
+  <!-- Begin page content -->
+  <main class="flex-shrink-0">
+    <!--BARRA DE PESQUISA-->
+    <div class="container">
+      <form class="d-flex my-4">
+        <input class="form-control me-2" type="search" placeholder="pesquisar" aria-label="Search">
+        <button class="btn text-light" type="submit" style="background: #96330f;">Pesquisar</button>
+      </form>
+    </div>
+    
+    <!--CARDS-->
+    <form method="post">
+      {% csrf_token %}
+      {% for produto in object_list %}
+      <div class="container">
+        <div class="card border-0 mb-3" onclick="count(this)">
+          <div class="row g-0">
+            <div class="col-3">
+              <img src="https://via.placeholder.com/100/" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-7 px-2">
+              <div>
+                <h5 class="card-title" style="color: #96330F;">{{ produto.nome }}</h5>
+                <p class="card-text text-muted fs-6">{{produto.lista}} | {{produto.unidade}} </p>
+<!--                <input type="range" class="form-range" min="0" max="100" step="1" oninput="range(this)">-->
+              </div>
+            </div>
+            <div class="col-2">
+              {{ form.as_p }}
+              <input id="{{ produto.id }}" type="number" step="any" class="border-1 form-control text-center qtd">
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      <div class="container">
+        <button type="submit" class="btn btn-primary">Salvar</button>
+      </div>
+    </form>
+  </main>
+  
+  {% include 'footer.html' %}
+
+</body>
+{% endblock %}

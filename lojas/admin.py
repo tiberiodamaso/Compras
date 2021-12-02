@@ -1,15 +1,15 @@
 from django.contrib import admin
 
-from departamentos.models import Departamento, Loja
+from lojas.models import Departamento, Loja
 
 
 class LojaAdmin(admin.ModelAdmin):
-    list_display = ['nome', 'ativo']
+    list_display = ['nome', 'slug', 'ativo']
 
 
 # Register your models here.
 class DepartamentoAdmin(admin.ModelAdmin):
-    list_display = ['loja', 'nome', 'ativo']
+    list_display = ['nome', 'slug',  'loja', 'ativo']
     list_filter = ['loja', 'nome']
 
 
