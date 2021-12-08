@@ -11,7 +11,7 @@
     <div class="container">
       <form class="d-flex my-4">
         <input class="form-control me-2" type="search" placeholder="pesquisar" aria-label="Search">
-        <button class="btn text-light" type="submit" style="background: #96330f;">Pesquisar</button>
+        <button class="btn text-light" type="submit" style="background: #aa4d37;">Pesquisar</button>
       </form>
     </div>
     
@@ -20,29 +20,26 @@
       {% csrf_token %}
       {% for produto in object_list %}
       <div class="container">
-        <div class="card border-0 mb-3" onclick="count(this)">
+        <div class="card border-0 mb-3">
           <div class="row g-0">
-            <div class="col-3">
-              <img src="https://via.placeholder.com/100/" class="img-fluid rounded-start" alt="...">
+            <div class="col-3" onclick="count(this, 'img')">
+              <img src="{{ produto.imagem.url }}" class="img-fluid rounded-start" alt="...">
             </div>
-            <div class="col-7 px-2">
+            <div class="col-7 px-2" onclick="count(this, 'title')">
               <div>
-                <h5 class="card-title" style="color: #96330F;">{{ produto.nome }}</h5>
+                <h5 class="card-title" style="color: #aa4d37;">{{ produto.nome }}</h5>
                 <p class="card-text text-muted fs-6">{{produto.lista}} | {{produto.unidade}} </p>
 <!--                <input type="range" class="form-range" min="0" max="100" step="1" oninput="range(this)">-->
               </div>
-            </div>
+            </div >
             <div class="col-2">
-              {{ form.as_p }}
               <input id="{{ produto.id }}" type="number" step="any" class="border-1 form-control text-center qtd">
+              <a href="#" onclick="count(this, 'menos')" class="btn btn-danger mt-2 w-100">-</a>
             </div>
           </div>
         </div>
       </div>
       {% endfor %}
-      <div class="container">
-        <button type="submit" class="btn btn-primary">Salvar</button>
-      </div>
     </form>
   </main>
   

@@ -1,13 +1,14 @@
 import re
 
 from django.db import models
+from django.utils.text import slugify
 
 from lojas.models import Departamento, Loja
 
 
 def path_to_upload(produto, filename):
     extensao = filename.split('.')[1]
-    return f'produtos/{produto.nome}-foto.{extensao}'
+    return f'produtos/{slugify(produto.nome)}.{extensao}'
 
 
 class Unidade(models.Model):
@@ -39,7 +40,7 @@ class Produto(models.Model):
     nome = models.CharField(verbose_name='Nome', max_length=50)
     lista = models.ForeignKey(Lista, verbose_name='Lista de compras', max_length=50, on_delete=models.PROTECT)
     unidade = models.ForeignKey(Unidade, verbose_name='Unidade', max_length=2, on_delete=models.PROTECT)
-    # imagem = models.ImageField(verbose_name='Imagem', upload_to=path_to_upload, blank=True)
+    imagem = models.ImageField(verbose_name='Imagem', upload_to=path_to_upload, blank=True)
     descricao = models.TextField(verbose_name='Descrição', blank=True)
     pesquisa = models.TextField(verbose_name='Conteúdo pesquisável')
     departamento = models.ForeignKey(Departamento, verbose_name='Departamento', related_name='produtos',

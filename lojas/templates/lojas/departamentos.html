@@ -11,10 +11,18 @@
     <!--CARDS-->
     {% for departamento in object_list %}
       <div class="card mx-2 text-center" style="width: 45%;">
-      <a href="{% url 'lojas:produtos_list' departamento.loja.slug departamento.nome %}" class="text-decoration-none text-black">
-        <i class="bi bi-shop fs-2 text-center" style="font-size: 2rem !important;"></i>
+      <a href="{% url 'lojas:produtos_list' departamento.loja.slug departamento.nome|lower %}" class="text-decoration-none text-black pt-2">
+        {% if departamento.nome == 'COZINHA' %}
+          <i class="icofont-chef text-center" style="font-size: 3rem !important; color: #aa4d37;"></i>
+        {% elif departamento.nome == 'BAR' %}
+          <i class="icofont-beer text-center" style="font-size: 3rem !important; color: #aa4d37;"></i>
+        {% elif departamento.nome == 'FÁBRICA' %}
+          <i class="icofont-cubes text-center" style="font-size: 3rem !important; color: #aa4d37;"></i>
+        {% elif departamento.nome == 'POLPAS' %}
+          <i class="icofont-orange text-center" style="font-size: 3rem !important; color: #aa4d37;"></i>
+        {% endif %}
         <div class="card-body text-center">
-          <p class="card-title">{{departamento.nome}}</p>
+          <p class="card-title" style="color: #aa4d37;">{{departamento.nome}}</p>
         </div>
       </a>
       </div>
@@ -22,7 +30,5 @@
     </div>
   </main>
   
-  {% include 'footer.html' %}
-
 </body>
 {% endblock %}

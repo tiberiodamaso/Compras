@@ -1,6 +1,14 @@
-function count(e){
-  let input = e.firstElementChild.lastElementChild.firstElementChild;
-  input.value ++;
+function count(e, arg){
+  if (arg=='img'){
+    let inputImg = e.nextElementSibling.nextElementSibling.firstElementChild;
+    inputImg.value ++;
+  } else if (arg=='title') {
+    let inputTitle = e.nextElementSibling.firstElementChild;
+    inputTitle.value ++;
+  } else {
+    let inputMenos = e.parentElement.firstElementChild;
+    inputMenos.value --;
+  }
 }
 
 function range(e){

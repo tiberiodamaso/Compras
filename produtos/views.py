@@ -16,5 +16,5 @@ class DepartamentoProdutoList(ListView):
 
     def get_queryset(self):
         slug = self.kwargs['slug']
-        nome = self.kwargs['nome']
+        nome = self.kwargs['nome'].upper()
         return Produto.objects.filter(departamento__loja__slug=slug, departamento__nome=nome)
