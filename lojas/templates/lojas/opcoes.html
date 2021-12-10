@@ -10,10 +10,9 @@
   <main class="align-items-center d-flex justify-content-center">
     
     <!--CARDS-->
-    
     {% for loja in object_list %}
       <div class="card col-5 mx-2 text-center">
-        <a href="{% url 'lojas:departamentos' loja.slug %}" class="text-decoration-none text-black">
+        <a href="{% url 'lojas:contagem_loja' loja.slug %}" class="text-decoration-none text-black">
           <i class="bi bi-shop fs-2 text-center" style="font-size: 2rem !important;"></i>
           <div class="card-body text-center">
           <p class="card-title">{{loja.nome}}</p>

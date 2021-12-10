@@ -16,39 +16,32 @@
     </div>
     
     <!--CARDS-->
-    <h2 class="pb-4 text-center text-secondary">{{ departamento }}</h2>
+    <h2 class="pb-4 text-center text-secondary">Contagem geral {{ slug }}</h2>
     <form id="produtosForm" method="post">
       {% csrf_token %}
       {% for produto in object_list %}
       <div class="container border-bottom my-3">
         <div class="card border-0 mb-3">
           <div class="row g-0">
-            <div class="col-3" onclick="count(this, 'img')">
+            <div class="col-3">
               <img src="{{ produto.imagem.url }}" class="img-fluid rounded-start" alt="...">
             </div>
-            <div class="col-7 px-2" onclick="count(this, 'title')">
+            <div class="col-7 px-2">
               <div>
                 <h5 class="card-title" style="color: #aa4d37;">{{ produto.nome }}</h5>
                 <p class="card-text text-muted fs-6">{{produto.lista}} | {{produto.unidade}} </p>
-<!--                <input type="range" class="form-range" min="0" max="100" step="1" oninput="range(this)">-->
               </div>
             </div >
             <div class="col-2">
-              {{ form }}
-<!--              <input id="{{ produto.id }}" type="number" step="any" class="border-1 form-control text-center qtd">-->
-              <a href="#" onclick="count(this, 'menos')" class="btn btn-danger mt-2 w-100">-</a>
             </div>
           </div>
         </div>
       </div>
-      {% empty %}
-      <h2 class="pb-4 text-center small text-gray">Nenhum produto cadastrado nesse departamento</h2>
       {% endfor %}
     </form>
   </main>
-  {% if object_list %}
-    {% include 'footer.html' %}
-  {% endif %}
+  
+  {% include 'footer.html' %}
 
 </body>
 {% endblock %}

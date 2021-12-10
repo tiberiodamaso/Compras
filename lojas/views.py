@@ -3,7 +3,7 @@ from django.views.generic import ListView
 from lojas.models import Loja, Departamento
 
 
-class DepartamentoList(ListView):
+class Departamentos(ListView):
     ordering = 'nome'
     template_name = 'lojas/departamentos.html'
 
@@ -12,7 +12,13 @@ class DepartamentoList(ListView):
         return Departamento.objects.filter(loja__slug=slug)
 
 
-class LojaList(ListView):
+class Lojas(ListView):
     ordering = 'nome'
     template_name = 'lojas/lojas.html'
+    queryset = Loja.objects.all()
+
+
+class LojasContagem(ListView):
+    ordering = 'nome'
+    template_name = 'lojas/opcoes.html'
     queryset = Loja.objects.all()

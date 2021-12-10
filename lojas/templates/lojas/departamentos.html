@@ -6,12 +6,13 @@
   {% include 'menu.html' %}
 
   <!-- Begin page content -->
+  <h2 class="pb-4 text-center text-secondary">Departamentos</h2>
   <main class="container">
     <div class="g-3 row justify-content-center">
     <!--CARDS-->
     {% for departamento in object_list %}
       <div class="card mx-2 text-center" style="width: 45%;">
-      <a href="{% url 'lojas:produtos_list' departamento.loja.slug departamento.nome|lower %}" class="text-decoration-none text-black pt-2">
+      <a href="{% url 'lojas:produtos' departamento.loja.slug departamento.nome|lower %}" class="text-decoration-none text-black pt-2">
         {% if departamento.nome == 'COZINHA' %}
           <i class="icofont-chef text-center" style="font-size: 3rem !important; color: #aa4d37;"></i>
         {% elif departamento.nome == 'BAR' %}

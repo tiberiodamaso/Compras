@@ -3,7 +3,7 @@
   <div class="container">
     <div class="row">
       <div class="col text-center">
-        <button class="btn btn-secondary w-100">Limpar</button>
+        <button class="btn btn-secondary w-100" onclick="resetForm()">Limpar</button>
       </div>
       <div class="col text-center">
         <button class="btn text-white w-100" style="background-color: #aa4d37;">Salvar</button>
@@ -11,3 +11,10 @@
     </div>
   </div>
 </footer>
+
+<script>
+  function resetForm(){
+    let form = document.querySelector('#produtosForm');
+    form.reset();
+  }
+</script>

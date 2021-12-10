@@ -17,7 +17,7 @@ def login(request):
             user = auth.authenticate(request, username=username, password=password)
             if user is not None:
                 auth.login(request, user)
-                return redirect('lojas:lojas_list')
+                return redirect('lojas:lojas')
         else:
             messages.error(request, 'Usuário não cadastrado')
 
