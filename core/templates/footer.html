@@ -6,15 +6,19 @@
         <button class="btn btn-secondary w-100" onclick="resetForm()">Limpar</button>
       </div>
       <div class="col text-center">
-        <button class="btn text-white w-100" style="background-color: #aa4d37;">Salvar</button>
+        <button onclick="submitForm()" type="submit" class="btn text-white w-100" style="background-color: #aa4d37;">Salvar</button>
       </div>
     </div>
   </div>
 </footer>
 
 <script>
+  let form = document.querySelector('#produtosForm');
   function resetForm(){
-    let form = document.querySelector('#produtosForm');
     form.reset();
+  }
+  
+  function submitForm() {
+    form.submit();
   }
 </script>

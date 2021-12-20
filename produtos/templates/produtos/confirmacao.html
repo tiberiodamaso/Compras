@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<body class="d-flex flex-column h-100 justify-content-center">
+
+  {% include 'menu.html' %}
+
+  <!-- Begin page content -->
+  <main class="d-flex flex-column align-items-center">
+    {% include 'alertas.html' %}
+    <a href="javascript:history.back()" type="button" class="btn text-white col-3 my-3" style="background-color: #aa4d37">Voltar</a>
+  </main>
+  
+
+</body>
+{% endblock %}

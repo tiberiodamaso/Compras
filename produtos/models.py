@@ -79,3 +79,24 @@ class Produto(models.Model):
     def save(self, *args, **kwargs):
         self.pesquisa = self.formata_pesquisa()
         super().save(*args, **kwargs)
+
+
+# class Contagem(models.Model):
+#     produto = models.ManyToManyField(Produto, verbose_name='Produto', related_name='contagem')
+#     loja = models.ForeignKey(Loja, verbose_name='Loja', related_name='contagem',
+#                              on_delete=models.PROTECT)
+#     departamento = models.ForeignKey(Departamento, verbose_name='Departamento', related_name='contagem',
+#                                      on_delete=models.PROTECT)
+#     lista = models.ForeignKey(Lista, verbose_name='Lista de compras', max_length=50, on_delete=models.PROTECT)
+#     created = models.DateTimeField(verbose_name='Criado em', auto_now_add=True)
+#
+#     class Meta:
+#         verbose_name = 'Contagem'
+#         verbose_name_plural = 'Contagens'
+#         ordering = ['loja']
+#
+#     def get_produtos(self):
+#         return "\n".join([p.nome for p in self.produto.all()])
+#
+#     def __str__(self):
+#         return str(self.created)

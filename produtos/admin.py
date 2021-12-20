@@ -22,6 +22,11 @@ class ProdutoAdmin(admin.ModelAdmin):
     search_fields = ['nome', 'lista']
 
 
+# class ContagemAdmin(admin.ModelAdmin):
+#     list_display = ['get_produtos', 'loja', 'departamento', 'lista', 'created']
+
+
 admin.site.register(Unidade, UnidadeAdmin)
 admin.site.register(Lista, ListaAdmin)
 admin.site.register(Produto, ProdutoAdmin)
+# admin.site.register(Contagem, ContagemAdmin)

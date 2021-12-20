@@ -13,12 +13,11 @@ class Departamentos(ListView):
 
 
 class Lojas(ListView):
-    ordering = 'nome'
     template_name = 'lojas/lojas.html'
-    queryset = Loja.objects.all()
+    queryset = Loja.objects.filter(ativo=True)
 
 
-class LojasContagem(ListView):
+class ContagemOpcoes(ListView):
     ordering = 'nome'
     template_name = 'lojas/opcoes.html'
-    queryset = Loja.objects.all()
+    queryset = Loja.objects.filter(ativo=True)

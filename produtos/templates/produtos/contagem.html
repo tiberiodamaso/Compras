@@ -16,32 +16,46 @@
     </div>
     
     <!--CARDS-->
-    <h2 class="pb-4 text-center text-secondary">Contagem geral {{ slug }}</h2>
-    <form id="produtosForm" method="post">
-      {% csrf_token %}
-      {% for produto in object_list %}
-      <div class="container border-bottom my-3">
+    <h2 class="pb-4 text-center text-secondary">Contagem {{loja}}</h2>
+      {% for produto in produtos %}
+      <div class="container border-bottom pt-3">
         <div class="card border-0 mb-3">
           <div class="row g-0">
+            {% if loja != "Geral" %}
             <div class="col-3">
               <img src="{{ produto.imagem.url }}" class="img-fluid rounded-start" alt="...">
             </div>
             <div class="col-7 px-2">
               <div>
                 <h5 class="card-title" style="color: #aa4d37;">{{ produto.nome }}</h5>
-                <p class="card-text text-muted fs-6">{{produto.lista}} | {{produto.unidade}} </p>
+                  <p class="card-text text-muted fs-6">{{produto.lista}} | {{produto.unidade}} </p>
               </div>
             </div >
-            <div class="col-2">
+            <div class="col-2 text-center">
+                <p class="fs-2">{{produto.qtd|floatformat:"0"}}</p>
             </div>
+            {% endif %}
+            {% if loja == "Geral" %}
+            <div class="col-10 px-2">
+              <div>
+                <h5 class="card-title" style="color: #aa4d37;">{{ produto.nome }}</h5>
+                  <p class="card-text text-muted fs-6">{{produto.lista__nome}} | {{produto.unidade__nome}} </p>
+              </div>
+            </div >
+            <div class="col-2 text-center">
+                <p class="fs-2">{{produto.total|floatformat:"0"}}</p>
+            </div>
+            {% endif %}
           </div>
         </div>
       </div>
+      {% empty %}
+      <h2 class="pb-4 text-center small text-gray">Nenhum produto cadastrado</h2>
       {% endfor %}
-    </form>
   </main>
-  
-  {% include 'footer.html' %}
+  {% if produtos %}
+    {% include 'imprimir.html' %}
+  {% endif %}
 
 </body>
 {% endblock %}
