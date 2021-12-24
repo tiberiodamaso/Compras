@@ -1,9 +1,11 @@
 {% load static %}
 <footer class="footer fixed-bottom mt-auto py-3 bg-light">
+  <script>
+  </script>
   <div class="container">
     <div class="row">
       <div class="col text-center">
-        <button class="btn text-white w-100" style="background-color: #aa4d37;">Imprimir</button>
+        <a href="{% url 'lojas:imprimir' loja|lower %}" class="btn text-white w-100" style="background-color: #aa4d37;">Imprimir</a>
       </div>
     </div>
   </div>

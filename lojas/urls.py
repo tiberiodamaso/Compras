@@ -1,6 +1,6 @@
 from django.urls import path
 
-from lojas.views import Lojas, Departamentos, ContagemOpcoes
+from lojas.views import Lojas, Departamentos, ContagemOpcoes, Imprimir
 from produtos.views import produtos, Contagem
 
 app_name = 'lojas'
@@ -11,5 +11,6 @@ urlpatterns = [
     path('<slug:slug>/departamentos/<str:nome>/', produtos, name='produtos'),
     path('contagem/', ContagemOpcoes.as_view(), name='contagem_opcoes'),
     path('contagem/<slug:slug>/', Contagem.as_view(), name='contagem'),
+    path('imprimir/contagem/<slug:slug>/', Imprimir.as_view(), name='imprimir'),
 
 ]

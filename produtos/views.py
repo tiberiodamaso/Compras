@@ -22,7 +22,7 @@ class Contagem(ListView):
             template_name = 'produtos/contagem.html'
             return Produto.objects.filter(loja__slug=slug)
         else:
-            template_name = 'produtos/contagem.html'
+            template_name = 'produtos/contagem-pdf.html'
             return Produto.objects.all().values('nome', 'lista__nome', 'unidade__nome').annotate(total=Sum('qtd'))
 
     def get_context_data(self, **kwargs):
