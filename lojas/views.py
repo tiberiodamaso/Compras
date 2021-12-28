@@ -15,6 +15,7 @@ class Departamentos(ListView):
 
 
 class Lojas(ListView):
+    ordering = 'nome'
     template_name = 'lojas/lojas.html'
     queryset = Loja.objects.filter(ativo=True)
 
@@ -29,10 +30,6 @@ class Imprimir(PDFView):
     """
     A PDFView behaves pretty much like a TemplateView, so you can treat it as such.
     """
-    template_name = 'produtos/contagem-pdf.html'
-    prompt_download = True
-    download_name = 'Teste.pdf'
-
     def get_context_data(self, *args, **kwargs):
         """Pass some extra context to the template."""
         context = super().get_context_data(*args, **kwargs)
@@ -41,3 +38,12 @@ class Imprimir(PDFView):
         context['produtos'] = Produto.objects.filter(loja__slug=slug)
 
         return context
+
+    def get_download_name(self, **kwargs) -> str:
+        context = super().get_context_data(**kwargs)
+        slug = self.kwargs['slug']
+        return f'contagem-{slug}.pdf'
+
+    template_name = 'produtos/contagem-pdf.html'
+    prompt_download = True
+    download_name = get_download_name

@@ -8,8 +8,8 @@ from produtos.models import Produto, Lista, Unidade
 UNIDADES = ['KG', 'SC', 'FD', 'UN', 'ML', 'L']
 LISTAS = ['ATACADISTA', 'BEBIDAS', 'EMBALAGENS', 'DIVERSOS', 'POLPAS', 'IN NATURA', 'CARNES PRODUZIR',
           'COZINHA PRODUZIR']
-LOJAS = ['MARISTA', 'PASSEIO']
-DEPARTAMENTOS = ['COZINHA', 'BAR', 'FÁBRICA', 'POLPAS']
+LOJAS = ['MARISTA', 'PASSEIO', 'FÁBRICA']
+DEPARTAMENTOS = ['COZINHA', 'BAR', 'POLPAS', 'FÁBRICA']
 
 
 class Command(BaseCommand):
@@ -31,19 +31,19 @@ class Command(BaseCommand):
             unidade_db.save()
 
     def _criar_listas(self):
-        print("Populando a tabela Loja")
+        print("Populando a tabela Listas")
         for i, lista in enumerate(LISTAS):
             lista_db = Lista(i + 1, lista)
             lista_db.save()
 
     def _criar_lojas(self):
-        print("Populando a tabela Loja")
+        print("Populando a tabela Lojas")
         for i, loja in enumerate(LOJAS):
             loja_db = Loja(i + 1, loja)
             loja_db.save()
 
     def _criar_departamentos(self):
-        print("Populando a tabela Departamento")
+        print("Populando a tabela Departamentos")
         loja = Loja.objects.filter(id=1)[0]
         for i, departamento in enumerate(DEPARTAMENTOS):
             departamento_db = Departamento(i + 1, departamento)
@@ -51,7 +51,7 @@ class Command(BaseCommand):
             departamento_db.save()
 
     def _criar_produtos(self):
-        print("Populando a tabela Produto")
+        print("Populando a tabela Produtos")
         nome = 'Açafrão'
         lista = Lista.objects.filter(id=1)[0]
         unidade = Unidade.objects.filter(id=1)[0]
