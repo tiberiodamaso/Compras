@@ -1,0 +1,13 @@
+{% load static %}
+<footer class="footer fixed-bottom mt-auto py-3 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col text-center">
+        <a href="{% url 'lojas:departamentos' loja.slug %}" type="button" class="btn text-white w-100 btn-secondary">Departamentos</a>
+      </div>
+      <div class="col text-center">
+        <a href="javascript:history.back()" class="btn text-white w-100" style="background-color: #aa4d37;">Voltar</a>
+      </div>
+    </div>
+  </div>
+</footer>

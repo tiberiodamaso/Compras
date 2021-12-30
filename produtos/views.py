@@ -1,6 +1,6 @@
 # Create your views here.
 from django.contrib import messages
-from django.db.models import Count, Sum
+from django.db.models import Sum
 from django.shortcuts import render
 from django.views.generic import ListView
 
@@ -9,34 +9,34 @@ from produtos.forms import ProdutoForm
 from produtos.models import Produto
 
 
-class Contagem(ListView):
+class ContagemPorLoja(ListView):
     ordering = 'nome'
     context_object_name = 'produtos'
-
-    def get_template_names(self):
-        return ['produtos/contagem.html']
+    template_name = 'produtos/contagem.html'
 
     def get_queryset(self):
         slug = self.kwargs['slug']
-        if slug != 'geral':
-            template_name = 'produtos/contagem.html'
-            return Produto.objects.filter(loja__slug=slug)
-        else:
-            template_name = 'produtos/contagem-pdf.html'
-            return Produto.objects.all().values('nome', 'lista__nome', 'unidade__nome').annotate(total=Sum('qtd'))
+        return Produto.objects.filter(loja__slug=slug)
 
     def get_context_data(self, **kwargs):
-        context = super(Contagem, self).get_context_data(**kwargs)
-        context['loja'] = self.kwargs['slug'].capitalize()
+        context = super(ContagemPorLoja, self).get_context_data(**kwargs)
+        context['loja'] = Loja.objects.get(slug=self.kwargs['slug']).nome
+        context['slug'] = self.kwargs['slug']
         return context
 
 
 class ContagemGeral(ListView):
+    ordering = 'nome'
     template_name = 'produtos/contagem-geral.html'
     context_object_name = 'produtos'
 
     def get_queryset(self):
-        return Produto.objects.all().values('nome').annotate(total=Count('nome'))
+        return Produto.objects.all().values('nome', 'lista__nome', 'unidade__nome').annotate(total=Sum('qtd'))
+
+    def get_context_data(self, **kwargs):
+        context = super(ContagemGeral, self).get_context_data(**kwargs)
+        context['slug'] = 'geral'
+        return context
 
 
 def produtos(request, slug, nome):

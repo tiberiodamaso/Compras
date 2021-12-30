@@ -16,9 +16,10 @@
     </div>
     
     <!--CARDS-->
-    <h2 class="pb-4 text-center text-secondary">{{loja}} — {{departamento}}</h2>
+    <h2 class="pb-1 text-center text-secondary">CONTAGEM</h2>
+    <h5 class="pb-4 text-center text-secondary">{{loja}} — {{departamento|capfirst}}</h5>
     {% include 'alertas.html' %}
-    <form id="produtosForm" method="post" action="">
+    <form id="produtosForm" method="post">
       {% csrf_token %}
       {% for produto in produtos %}
       <div class="container border-bottom my-3">
@@ -35,7 +36,7 @@
               </div>
             </div >
             <div class="col-2">
-              {{ form }}
+              <input name="qtd" id="qtd" type="number" class="border-1 form-control text-center qtd" value="{{produto.qtd|floatformat}}">
               <input name="id" id="{{ produto.id }}" type="text" class="d-none" value="{{produto.id}}">
               <a href="#" onclick="count(this, 'menos')" class="btn btn-danger mt-2 w-100">-</a>
             </div>

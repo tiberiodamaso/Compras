@@ -7,10 +7,11 @@
 
   <!-- Begin page content -->
   <main class="d-flex flex-column align-items-center">
+    <h2 class="pb-1 text-center text-secondary">CONTAGEM</h2>
+    <h5 class="pb-4 text-center text-secondary">{{loja}} — {{departamento|capfirst}}</h5>
     {% include 'alertas.html' %}
-    <a href="javascript:history.back()" type="button" class="btn text-white col-3 my-3" style="background-color: #aa4d37">Voltar</a>
   </main>
-  
+  {% include 'footer2.html' %}
 
 </body>
 {% endblock %}

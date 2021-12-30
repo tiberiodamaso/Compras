@@ -1,14 +1,12 @@
 {% load static %}
 <footer class="footer fixed-bottom mt-auto py-3 bg-light">
-  <script>
-  </script>
   <div class="container">
     <div class="row">
       <div class="col text-center">
         <a href="javascript:history.back()" type="button" class="btn text-white w-100 btn-secondary">Voltar</a>
       </div>
       <div class="col text-center">
-        <a href="{% url 'lojas:imprimir' loja|lower %}" class="btn text-white w-100" style="background-color: #aa4d37;">Imprimir</a>
+        <a href="{% url 'lojas:imprimir' slug %}" class="btn text-white w-100" style="background-color: #aa4d37;">Imprimir</a>
       </div>
     </div>
   </div>

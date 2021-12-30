@@ -1,3 +1,4 @@
+from django.db.models import Sum
 from django.views.generic import ListView
 from django_renderpdf.views import PDFView
 
@@ -12,6 +13,12 @@ class Departamentos(ListView):
     def get_queryset(self):
         slug = self.kwargs['slug']
         return Departamento.objects.filter(loja__slug=slug)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        slug = self.kwargs['slug']
+        context['loja'] = Loja.objects.get(slug=slug).nome
+        return context
 
 
 class Lojas(ListView):
@@ -34,8 +41,12 @@ class Imprimir(PDFView):
         """Pass some extra context to the template."""
         context = super().get_context_data(*args, **kwargs)
         slug = self.kwargs['slug']
-        context['loja'] = slug
-        context['produtos'] = Produto.objects.filter(loja__slug=slug)
+        if slug == 'geral':
+            context['loja'] = 'GERAL'
+            context['produtos'] = Produto.objects.all().values('nome', 'lista__nome').annotate(qtd=Sum('qtd'))
+        else:
+            context['loja'] = Loja.objects.get(slug=slug).nome
+            context['produtos'] = Produto.objects.filter(loja__slug=slug)
 
         return context
 

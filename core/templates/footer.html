@@ -3,6 +3,9 @@
   <div class="container">
     <div class="row">
       <div class="col text-center">
+        <button class="btn btn-success w-100" onclick="javascript:history.back()">Voltar</button>
+      </div>
+      <div class="col text-center">
         <button class="btn btn-secondary w-100" onclick="resetForm()">Limpar</button>
       </div>
       <div class="col text-center">
@@ -15,7 +18,10 @@
 <script>
   let form = document.querySelector('#produtosForm');
   function resetForm(){
-    form.reset();
+    qtdFields = document.querySelectorAll('.qtd');
+    for (field of qtdFields){
+      field.value = 0;
+    }
   }
   
   function submitForm() {
