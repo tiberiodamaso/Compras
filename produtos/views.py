@@ -1,50 +1,49 @@
-# Create your views here.
 from django.contrib import messages
 from django.db.models import Sum
 from django.shortcuts import render
 from django.views.generic import ListView
 
 from lojas.models import Loja, Departamento
-from produtos.forms import ProdutoForm
-from produtos.models import Produto
+from produtos.models import Produto, Lista
 
 
-class ContagemPorLoja(ListView):
+class ListaDeComprasPorLoja(ListView):
     ordering = 'nome'
     context_object_name = 'produtos'
-    template_name = 'produtos/contagem.html'
+    template_name = 'produtos/lista-de-compras-por-loja.html'
 
     def get_queryset(self):
         slug = self.kwargs['slug']
-        return Produto.objects.filter(loja__slug=slug)
+        lista = Lista.objects.get(nome=slug.upper())
+        return lista.produtos.all()
+        # return Produto.objects.filter(loja__slug=slug)
 
     def get_context_data(self, **kwargs):
-        context = super(ContagemPorLoja, self).get_context_data(**kwargs)
+        context = super(ListaDeComprasPorLoja, self).get_context_data(**kwargs)
         context['loja'] = Loja.objects.get(slug=self.kwargs['slug']).nome
         context['slug'] = self.kwargs['slug']
         return context
 
 
-class ContagemGeral(ListView):
+class ListaDeComprasTotal(ListView):
     ordering = 'nome'
-    template_name = 'produtos/contagem-geral.html'
+    template_name = 'produtos/lista-de-compras-total.html'
     context_object_name = 'produtos'
 
     def get_queryset(self):
         return Produto.objects.all().values('nome', 'lista__nome', 'unidade__nome').annotate(total=Sum('qtd'))
 
     def get_context_data(self, **kwargs):
-        context = super(ContagemGeral, self).get_context_data(**kwargs)
-        context['slug'] = 'geral'
+        context = super(ListaDeComprasTotal, self).get_context_data(**kwargs)
+        context['slug'] = 'total'
         return context
 
 
 def produtos(request, slug, nome):
-    form = ProdutoForm()
     loja = Loja.objects.get(slug=slug)
     departamento = Departamento.objects.get(nome=nome.upper(), loja=loja)
-    produtos = Produto.objects.filter(departamento__nome=nome.upper(), loja__slug=slug)
-    context = {'form': form, 'produtos': produtos, 'loja': loja, 'departamento': departamento}
+    produtos = Produto.objects.filter(departamento__nome=nome.upper(), loja__slug=slug).order_by('area', 'nome')
+    context = {'produtos': produtos, 'loja': loja, 'departamento': departamento}
 
     if request.method == 'POST':
         data = request.POST
@@ -52,8 +51,8 @@ def produtos(request, slug, nome):
             produto = Produto.objects.get(id=produto_id)
             produto.qtd = data.getlist('qtd')[index]
             produto.save()
-        messages.success(request, 'Contagem salva com sucesso!')
-        return render(request, 'produtos/confirmacao.html', context)
+        messages.success(request, 'Contagem finalizada!')
+        return render(request, 'produtos/confirmacao-contagem.html', context)
 
     return render(request, 'produtos/produtos.html', context)
 
@@ -115,6 +114,6 @@ def produtos(request, slug, nome):
 #             produto.qtd = data.getlist('qtd')[index]
 #             produto.save()
 #         messages.success(request, 'Contagem salva com sucesso!')
-#         return render(request, 'produtos/confirmacao.html')
+#         return render(request, 'produtos/confirmacao-lista-de-compras-por-loja.html')
 #
 #     return render(request, 'produtos/produtos.html')

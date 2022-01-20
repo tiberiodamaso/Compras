@@ -1,28 +1,87 @@
 {% load static %}
-<footer class="footer fixed-bottom mt-auto py-3 bg-light">
+<footer style="background: #29292a;" class="footer fixed-bottom mt-auto py-3">
   <div class="container">
     <div class="row">
       <div class="col text-center">
-        <button class="btn btn-success w-100" onclick="javascript:history.back()">Voltar</button>
+        <button class="btn btn-success w-100" onclick="submitForm()" type="submit">Finalizar</button>
       </div>
       <div class="col text-center">
-        <button class="btn btn-secondary w-100" onclick="resetForm()">Limpar</button>
-      </div>
-      <div class="col text-center">
-        <button onclick="submitForm()" type="submit" class="btn text-white w-100" style="background-color: #aa4d37;">Salvar</button>
+        <button  type="button" id="btnPausar" class="btn text-white w-100" style="background-color: #aa4d37;"
+                 data-bs-toggle="modal" data-bs-target="#pausarModal">Pausar</button>
       </div>
     </div>
   </div>
 </footer>
 
+<!-- Modal Pausar -->
+<div class="modal fade" id="pausarModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center">
+        <h5 class="modal-title text-muted" id="pausarModalLabel">CONTAGEM PAUSADA</h5>
+<!--        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>-->
+      </div>
+<!--      <div class="modal-body">-->
+<!--        ...-->
+<!--      </div>-->
+      <div class="modal-footer justify-content-center">
+        <button type="button" data-bs-dismiss="modal" class="btn text-white" style="background-color: #aa4d37;">Continuar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Finalizar Contagem -->
+<!--<div class="modal fade" id="finalizarModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">-->
+<!--  <div class="modal-dialog modal-dialog-centered">-->
+<!--    <div class="modal-content">-->
+<!--      <div class="modal-header justify-content-center">-->
+<!--        <h5 class="modal-title text-muted" id="finalizarModalLabel">CONTAGEM FINALIZADA</h5>-->
+<!--        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>-->
+<!--      </div>-->
+<!--      <div class="modal-body">-->
+<!--        ...-->
+<!--      </div>-->
+<!--      <div class="modal-footer justify-content-center">-->
+<!--        <button type="button" data-bs-dismiss="modal" class="btn btn-danger">Início</button>-->
+<!--        <button type="button" data-bs-dismiss="modal" class="btn btn-danger">Sair</button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
 <script>
   let form = document.querySelector('#produtosForm');
-  function resetForm(){
-    qtdFields = document.querySelectorAll('.qtd');
-    for (field of qtdFields){
-      field.value = 0;
-    }
-  }
+<!--  let btnText  = document.querySelector('#btnPausar').firstChild;-->
+<!--  let qtdFields = document.querySelectorAll('.qtd');-->
+<!--  let btnMais = document.querySelectorAll('.btnMais');-->
+<!--  let btnMenos = document.querySelectorAll('.btnMenos');-->
+<!--  function pausarContinuarContagem(){-->
+<!--    if (btnText.data == "Pausar"){-->
+<!--      btnText.data = "Continuar";-->
+<!--      for (field of qtdFields){-->
+<!--        field.disabled = true;-->
+<!--      }-->
+<!--      for (btn of btnMais){-->
+<!--        btn.setAttribute('onclick', '');-->
+<!--      }-->
+<!--      for (btn of btnMenos){-->
+<!--        btn.setAttribute('onclick', '');-->
+<!--      }-->
+<!--    }-->
+<!--    else {-->
+<!--      btnText.data = "Pausar";-->
+<!--      for (field of qtdFields){-->
+<!--        field.disabled = false;-->
+<!--      }-->
+<!--      for (btn of btnMais){-->
+<!--        btn.setAttribute('onclick', "count(this, 'title')");-->
+<!--      }-->
+<!--      for (btn of btnMenos){-->
+<!--        btn.setAttribute('onclick', "count(this, 'menos')");-->
+<!--      }-->
+<!--    }-->
+<!--  }-->
   
   function submitForm() {
     form.submit();

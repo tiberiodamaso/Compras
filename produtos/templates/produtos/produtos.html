@@ -25,20 +25,18 @@
       <div class="container border-bottom my-3">
         <div class="card border-0 mb-3">
           <div class="row g-0">
-            <div class="col-3" onclick="count(this, 'img')">
-              <img src="{{ produto.imagem.url }}" class="img-fluid rounded-start" alt="...">
-            </div>
-            <div class="col-7 px-2" onclick="count(this, 'title')">
+            <div class="col-9 px-2 btnMais" onclick="count(this, 'title')">
               <div>
                 <h5 class="card-title" style="color: #aa4d37;">{{ produto.nome }}</h5>
-                <p class="card-text text-muted fs-6">{{produto.lista}} | {{produto.unidade}} </p>
+                <p class="card-text text-muted fs-6">{{produto.area}}</p>
 <!--                <input type="range" class="form-range" min="0" max="100" step="1" oninput="range(this)">-->
               </div>
             </div >
-            <div class="col-2">
-              <input name="qtd" id="qtd" type="number" class="border-1 form-control text-center qtd" value="{{produto.qtd|floatformat}}">
+            <div class="col-3">
+<!--              <input name="qtd" id="qtd" type="number" class="border-1 form-control text-center qtd" value="{{produto.qtd|floatformat}}">-->
+              <input name="qtd" id="qtd" type="number" class="border-1 form-control text-center qtd" value="0">
               <input name="id" id="{{ produto.id }}" type="text" class="d-none" value="{{produto.id}}">
-              <a href="#" onclick="count(this, 'menos')" class="btn btn-danger mt-2 w-100">-</a>
+              <a href="#" onclick="count(this, 'menos')" class="btn btn-danger mt-2 w-100 btnMenos">-</a>
             </div>
           </div>
         </div>

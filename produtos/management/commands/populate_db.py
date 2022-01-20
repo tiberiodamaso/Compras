@@ -2,14 +2,16 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
 
-from lojas.models import Departamento, Loja
+from lojas.models import Departamento, Loja, Area
 from produtos.models import Produto, Lista, Unidade
 
 UNIDADES = ['KG', 'SC', 'FD', 'UN', 'ML', 'L']
 LISTAS = ['ATACADISTA', 'BEBIDAS', 'EMBALAGENS', 'DIVERSOS', 'POLPAS', 'IN NATURA', 'CARNES PRODUZIR',
           'COZINHA PRODUZIR']
 LOJAS = ['MARISTA', 'PASSEIO', 'FÁBRICA']
-DEPARTAMENTOS = ['COZINHA', 'BAR', 'POLPAS', 'FÁBRICA']
+DEPARTAMENTOS = ['COZINHA', 'BAR', 'DEMAIS', 'FÁBRICA']
+AREAS = ['CÂMARA CONGELADA', 'CÂMARA RESFRIADA', 'SECOS', 'ATACADISTA', 'CERVEJAS', 'POLPAS', 'MATERIAL DE LIMPEZA',
+         'BOQUETA', 'CAIXA', 'VINHOS']
 
 
 class Command(BaseCommand):
@@ -22,6 +24,8 @@ class Command(BaseCommand):
         loja_db.delete()
         departamento_db = Departamento.objects.all()
         departamento_db.delete()
+        area_db = Area.objects.all()
+        area_db.delete()
         print("Banco de dados deletado.")
 
     def _criar_unidades(self):
@@ -50,18 +54,28 @@ class Command(BaseCommand):
             departamento_db.loja = loja
             departamento_db.save()
 
+    def _criar_areas(self):
+        print("Populando a tabela Áreas")
+        departamento = Departamento.objects.filter(id=1)[0]
+        for i, area in enumerate(AREAS):
+            area_db = Area(i + 1, area)
+            area_db.departamento = departamento
+            area_db.save()
+
     def _criar_produtos(self):
         print("Populando a tabela Produtos")
         nome = 'Açafrão'
         lista = Lista.objects.filter(id=1)[0]
         unidade = Unidade.objects.filter(id=1)[0]
         descricao = 'Uma descrição inicial'
-        departamento = Departamento.objects.filter(id=1)[0]
         loja = Loja.objects.filter(id=1)[0]
+        departamento = Departamento.objects.filter(id=1)[0]
+        area = Area.objects.filter(id=1)[0]
         qtd = 5
+        media = 1
 
-        produto_db = Produto(nome=nome, lista=lista, unidade=unidade, descricao=descricao, departamento=departamento,
-                             loja=loja, qtd=qtd)
+        produto_db = Produto(nome=nome, lista=lista, unidade=unidade, descricao=descricao, loja=loja,
+                             departamento=departamento, area=area, qtd=qtd, media=media)
         produto_db.save()
 
     def _criar_superuser(self):
@@ -89,6 +103,7 @@ class Command(BaseCommand):
             self._criar_listas()
             self._criar_lojas()
             self._criar_departamentos()
+            self._criar_areas()
             self._criar_produtos()
             self._criar_superuser()
             print("\nBanco populado com sucesso!!")

@@ -27,10 +27,10 @@ class Lojas(ListView):
     queryset = Loja.objects.filter(ativo=True)
 
 
-class ContagemOpcoes(ListView):
+class ListaDeComprasOpcoes(ListView):
     ordering = 'nome'
-    template_name = 'lojas/opcoes.html'
-    queryset = Loja.objects.filter(ativo=True)
+    template_name = 'lojas/lojas-opcoes.html'
+    queryset = Loja.objects.filter(ativo=True).exclude(slug='fabrica')
 
 
 class Imprimir(PDFView):
@@ -41,20 +41,20 @@ class Imprimir(PDFView):
         """Pass some extra context to the template."""
         context = super().get_context_data(*args, **kwargs)
         slug = self.kwargs['slug']
-        if slug == 'geral':
-            context['loja'] = 'GERAL'
+        if slug == 'total':
+            context['loja'] = 'TOTAL'
             context['produtos'] = Produto.objects.all().values('nome', 'lista__nome').annotate(qtd=Sum('qtd'))
         else:
             context['loja'] = Loja.objects.get(slug=slug).nome
-            context['produtos'] = Produto.objects.filter(loja__slug=slug)
+            context['produtos'] = Produto.objects.filter(loja__slug=slug).order_by('tipo__nome', 'nome')
 
         return context
 
     def get_download_name(self, **kwargs) -> str:
         context = super().get_context_data(**kwargs)
         slug = self.kwargs['slug']
-        return f'contagem-{slug}.pdf'
+        return f'lista-de-compras-{slug}.pdf'
 
-    template_name = 'produtos/contagem-pdf.html'
+    template_name = 'produtos/lista-de-compras-por-loja-pdf.html'
     prompt_download = True
     download_name = get_download_name
