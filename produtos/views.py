@@ -4,18 +4,19 @@ from django.shortcuts import render
 from django.views.generic import ListView
 
 from lojas.models import Loja, Departamento
-from produtos.models import Produto, Lista
+from produtos.models import Produto, Lista, Contagem
 
 
 class ListaDeComprasPorLoja(ListView):
     ordering = 'nome'
-    context_object_name = 'produtos'
+    context_object_name = 'contagens'
     template_name = 'produtos/lista-de-compras-por-loja.html'
 
     def get_queryset(self):
         slug = self.kwargs['slug']
-        lista = Lista.objects.get(nome=slug.upper())
-        return lista.produtos.all()
+        lista = Lista.objects.filter(nome=slug.upper()).order_by('created').first()
+        return lista.contagem.all().order_by('produto__tipo__nome', 'produto').exclude(comprar=0)
+        # return lista.produtos.all()
         # return Produto.objects.filter(loja__slug=slug)
 
     def get_context_data(self, **kwargs):
@@ -47,15 +48,26 @@ def produtos(request, slug, nome):
 
     if request.method == 'POST':
         data = request.POST
+        try:
+            lista = Lista.objects.get(nome=loja)
+        except:
+            lista = Lista.objects.create(nome=loja)
+        # lista = Lista.objects.get_or_create(nome=loja)
         for index, produto_id in enumerate(data.getlist('id')):
             produto = Produto.objects.get(id=produto_id)
-            produto.qtd = data.getlist('qtd')[index]
-            produto.save()
+            contagem = Contagem.objects.create(produto=produto, qtd=int(data.getlist('qtd')[index]))
+            lista.contagem.add(contagem)
+            # lista.save()
+            # contagem.produto = produto
+            # contagem.qtd = data.getlist('qtd')[index]
+            # produto.qtd = data.getlist('qtd')[index]
+            # produto.save()
+            # contagem.save()
+
         messages.success(request, 'Contagem finalizada!')
         return render(request, 'produtos/confirmacao-contagem.html', context)
 
     return render(request, 'produtos/produtos.html', context)
-
 
 # class Produtos(ListView):
 #     ordering = 'nome'

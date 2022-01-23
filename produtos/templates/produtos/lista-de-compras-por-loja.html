@@ -18,19 +18,19 @@
     <!--CARDS-->
     <h2 class="pb-4 text-center text-secondary">{{loja}} - COMPRAR</h2>
       
-      {% for produto in produtos %}
+      {% for contagem in contagens %}
       <div class="container border-bottom pt-3">
         <div class="card border-0 mb-3">
           <div class="row g-0">
             <div class="col-9 px-2">
               <div>
-                <h5 class="card-title" style="color: #aa4d37;">{{ produto.nome }}</h5>
-                  <p class="card-text text-muted fs-6">{{produto.lista}} | {{produto.unidade}} </p>
+                <h5 class="card-title" style="color: #aa4d37;">{{ contagem.produto.nome }}</h5>
+                  <p class="card-text text-muted fs-6">{{contagem.produto.tipo}}</p>
               </div>
             </div >
             <div class="col-3 text-center">
                 
-                <p class="fs-2">{{produto.qtd|floatformat:"0"}}</p>
+                <p class="fs-2">{{contagem.comprar|floatformat:"0"}}</p>
             </div>
           </div>
         </div>
