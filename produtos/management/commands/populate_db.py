@@ -18,6 +18,12 @@ class Command(BaseCommand):
 
     def _cleaner(self):
         print("Preparando para deleter todas as tabelas do banco de dados!")
+        unidade_db = Unidade.objects.all()
+        unidade_db.delete()
+        tipo_db = Tipo.objects.all()
+        tipo_db.delete()
+        lista_db = Lista.objects.all()
+        lista_db.delete()
         produto_db = Produto.objects.all()
         produto_db.delete()
         loja_db = Loja.objects.all()
