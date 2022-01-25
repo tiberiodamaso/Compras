@@ -4,19 +4,19 @@ from django.shortcuts import render
 from django.views.generic import ListView
 
 from lojas.models import Loja, Departamento
-from produtos.models import Produto, Lista, Contagem
+from produtos.models import Produto, Lista
 
 
 class ListaDeComprasPorLoja(ListView):
     ordering = 'nome'
-    context_object_name = 'contagens'
+    context_object_name = 'produtos'
     template_name = 'produtos/lista-de-compras-por-loja.html'
 
     def get_queryset(self):
         slug = self.kwargs['slug']
         lista = Lista.objects.filter(nome=slug.upper()).order_by('created').first()
-        return lista.contagem.all().order_by('produto__tipo__nome', 'produto').exclude(comprar=0)
-        # return lista.produtos.all()
+        # return lista.contagem.all().order_by('produto__tipo__nome', 'produto').exclude(comprar=0)
+        return lista.produtos.all().exclude(comprar=0).order_by('tipo', 'nome')
         # return Produto.objects.filter(loja__slug=slug)
 
     def get_context_data(self, **kwargs):
@@ -40,7 +40,7 @@ class ListaDeComprasTotal(ListView):
         return context
 
 
-def produtos(request, slug, nome):
+def contagem(request, slug, nome):
     loja = Loja.objects.get(slug=slug)
     departamento = Departamento.objects.get(nome=nome.upper(), loja=loja)
     produtos = Produto.objects.filter(departamento__nome=nome.upper(), loja__slug=slug).order_by('area', 'nome')
@@ -48,30 +48,42 @@ def produtos(request, slug, nome):
 
     if request.method == 'POST':
         data = request.POST
-        try:
-            lista = Lista.objects.get(nome=loja)
-        except:
-            lista = Lista.objects.create(nome=loja)
+        # try:
+        #     lista = Lista.objects.get(nome=loja)
+        # except:
+        #     lista = Lista.objects.create(nome=loja)
         # lista = Lista.objects.get_or_create(nome=loja)
         for index, produto_id in enumerate(data.getlist('id')):
             produto = Produto.objects.get(id=produto_id)
-            contagem = Contagem.objects.create(produto=produto, qtd=int(data.getlist('qtd')[index]))
-            lista.contagem.add(contagem)
+            # contagem = Contagem.objects.create(produto=produto, qtd=int(data.getlist('qtd')[index]))
+            # lista.contagem.add(contagem)
             # lista.save()
             # contagem.produto = produto
             # contagem.qtd = data.getlist('qtd')[index]
-            # produto.qtd = data.getlist('qtd')[index]
-            # produto.save()
+            produto.qtd = int(data.getlist('qtd')[index])
+            produto.save()
             # contagem.save()
 
         messages.success(request, 'Contagem finalizada!')
         return render(request, 'produtos/confirmacao-contagem.html', context)
 
-    return render(request, 'produtos/produtos.html', context)
+    return render(request, 'produtos/contagem.html', context)
+
+
+def zerar_contagem(request, slug):
+    loja = Loja.objects.get(slug=slug)
+    produtos = Produto.objects.filter(loja__slug=slug)
+    context = {'produtos': produtos, 'loja': loja}
+    for produto in produtos:
+        produto.qtd = 0
+        produto.save()
+    messages.success(request, f'Contagem {slug} zerada!')
+    return render(request, 'produtos/confirmacao-contagem-zerada.html', context)
+
 
 # class Produtos(ListView):
 #     ordering = 'nome'
-#     template_name = 'produtos/produtos.html'
+#     template_name = 'produtos/contagem.html'
 #
 #     def get_context_data(self, **kwargs):
 #         context = super(Produtos, self).get_context_data(**kwargs)
@@ -88,7 +100,7 @@ def produtos(request, slug, nome):
 #
 # class Produtos(UpdateView):
 #     ordering = 'nome'
-#     template_name = 'produtos/produtos.html'
+#     template_name = 'produtos/contagem.html'
 #
 #     def get_context_data(self, **kwargs):
 #         context = super(Produtos, self).get_context_data(**kwargs)
@@ -105,7 +117,7 @@ def produtos(request, slug, nome):
 #
 #     def get(self, request, *args, **kwargs):
 #         queryset = self.get_queryset()
-#         # return render(request, 'produtos/produtos.html', {'object_list': queryset})
+#         # return render(request, 'produtos/contagem.html', {'object_list': queryset})
 #         return super().get(request, *args, **kwargs)
 #
 #     def post(self, request, *args, **kwargs):
@@ -128,4 +140,4 @@ def produtos(request, slug, nome):
 #         messages.success(request, 'Contagem salva com sucesso!')
 #         return render(request, 'produtos/confirmacao-lista-de-compras-por-loja.html')
 #
-#     return render(request, 'produtos/produtos.html')
+#     return render(request, 'produtos/contagem.html')

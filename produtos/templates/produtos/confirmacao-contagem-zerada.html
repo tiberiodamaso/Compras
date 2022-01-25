@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<body class="d-flex flex-column h-100 justify-content-center">
+
+  {% include 'menu.html' %}
+
+  <!-- Begin page content -->
+  <main class="d-flex flex-column align-items-center">
+    <h2 class="pb-1 text-center text-secondary">CONTAGEM</h2>
+    <h5 class="pb-4 text-center text-secondary">{{loja}}</h5>
+    {% include 'alertas.html' %}
+  </main>
+  <footer style="background: #29292a;" class="footer fixed-bottom mt-auto py-3">
+  <div class="container">
+    <div class="row">
+      <div class="col text-center">
+        <a href="{% url 'lojas:lojas' %}" class="btn btn-success text-white w-100">Início</a>
+      </div>
+      <div class="col text-center">
+        <a href="{% url 'usuarios:logout' %}" class="btn btn-danger text-white w-100">Sair</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+{% endblock %}

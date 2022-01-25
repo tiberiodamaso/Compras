@@ -3,7 +3,7 @@
   <div class="container">
     <div class="row">
       <div class="col text-center">
-        <a href="javascript:history.back()" type="button" class="btn text-white w-100 btn-secondary">Voltar</a>
+        <a href="{% url 'lojas:zerar_contagem' slug %}" type="button" class="btn text-white w-100 btn-success">Zerar contagem</a>
       </div>
       <div class="col text-center">
         <a href="{% url 'lojas:imprimir' slug %}" class="btn text-white w-100" style="background-color: #aa4d37;">Imprimir</a>
