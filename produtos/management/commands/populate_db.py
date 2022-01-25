@@ -1,14 +1,13 @@
-from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
 
 from lojas.models import Departamento, Loja, Area
-from produtos.models import Produto, Lista, Unidade
+from produtos.models import Produto, Lista, Unidade, Tipo
 
 UNIDADES = ['KG', 'SC', 'FD', 'UN', 'ML', 'L']
-LISTAS = ['ATACADISTA', 'BEBIDAS', 'EMBALAGENS', 'DIVERSOS', 'POLPAS', 'IN NATURA', 'CARNES PRODUZIR',
+TIPOS = ['ATACADISTA', 'BEBIDAS', 'EMBALAGENS', 'DIVERSOS', 'POLPAS', 'IN NATURA', 'CARNES PRODUZIR',
           'COZINHA PRODUZIR']
 LOJAS = ['MARISTA', 'PASSEIO', 'FÁBRICA']
+LISTAS = ['MARISTA', 'PASSEIO']
 DEPARTAMENTOS = ['COZINHA', 'BAR', 'DEMAIS', 'FÁBRICA']
 AREAS = ['CÂMARA CONGELADA', 'CÂMARA RESFRIADA', 'SECOS', 'ATACADISTA', 'CERVEJAS', 'POLPAS', 'MATERIAL DE LIMPEZA',
          'BOQUETA', 'CAIXA', 'VINHOS']
@@ -34,17 +33,23 @@ class Command(BaseCommand):
             unidade_db = Unidade(i + 1, unidade)
             unidade_db.save()
 
-    def _criar_listas(self):
-        print("Populando a tabela Listas")
-        for i, lista in enumerate(LISTAS):
-            lista_db = Lista(i + 1, lista)
-            lista_db.save()
+    def _criar_tipos(self):
+        print("Populando a tabela Tipos")
+        for i, tipo in enumerate(TIPOS):
+            tipo_db = Tipo(i + 1, tipo)
+            tipo_db.save()
 
     def _criar_lojas(self):
         print("Populando a tabela Lojas")
         for i, loja in enumerate(LOJAS):
             loja_db = Loja(i + 1, loja)
             loja_db.save()
+
+    def _criar_listas(self):
+        print("Populando a tabela Listas")
+        for i, lista in enumerate(LISTAS):
+            lista_db = Lista(i + 1, lista)
+            lista_db.save()
 
     def _criar_departamentos(self):
         print("Populando a tabela Departamentos")
@@ -65,36 +70,37 @@ class Command(BaseCommand):
     def _criar_produtos(self):
         print("Populando a tabela Produtos")
         nome = 'Açafrão'
-        lista = Lista.objects.filter(id=1)[0]
+        tipo = Tipo.objects.filter(id=1)[0]
         unidade = Unidade.objects.filter(id=1)[0]
         descricao = 'Uma descrição inicial'
         loja = Loja.objects.filter(id=1)[0]
+        lista = Lista.objects.filter(id=1)[0]
         departamento = Departamento.objects.filter(id=1)[0]
         area = Area.objects.filter(id=1)[0]
-        qtd = 5
-        media = 1
+        qtd = 0
+        media = 10
 
-        produto_db = Produto(nome=nome, lista=lista, unidade=unidade, descricao=descricao, loja=loja,
+        produto_db = Produto(nome=nome, tipo=tipo, lista=lista, unidade=unidade, descricao=descricao, loja=loja,
                              departamento=departamento, area=area, qtd=qtd, media=media)
         produto_db.save()
 
-    def _criar_superuser(self):
-        username = "tiberio"
-        print(f"Criando superuser: {username}")
-        first_name = "Tibério"
-        last_name = 'Mendonça'
-        password = make_password("123")
-        is_staff = True
-        is_active = True
-        is_superuser = True
-        user_account = User(username=username,
-                            is_staff=is_staff,
-                            is_active=is_active,
-                            is_superuser=is_superuser,
-                            first_name=first_name,
-                            last_name=last_name,
-                            password=password)
-        user_account.save()
+    # def _criar_superuser(self):
+    #     username = "tiberio"
+    #     print(f"Criando superuser: {username}")
+    #     first_name = "Tibério"
+    #     last_name = 'Mendonça'
+    #     password = make_password("123")
+    #     is_staff = True
+    #     is_active = True
+    #     is_superuser = True
+    #     user_account = User(username=username,
+    #                         is_staff=is_staff,
+    #                         is_active=is_active,
+    #                         is_superuser=is_superuser,
+    #                         first_name=first_name,
+    #                         last_name=last_name,
+    #                         password=password)
+    #     user_account.save()
 
     def handle(self, *args, **options):
 
@@ -102,6 +108,7 @@ class Command(BaseCommand):
             self._criar_unidades()
             self._criar_listas()
             self._criar_lojas()
+            self._criar_listas()
             self._criar_departamentos()
             self._criar_areas()
             self._criar_produtos()
