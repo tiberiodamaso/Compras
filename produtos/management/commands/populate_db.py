@@ -114,11 +114,11 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         if input('\nDeseja popular as tabelas do banco de dados? (y/n): ') == str.lower("y"):
+            self._criar_tipos()
             self._criar_unidades()
-            self._criar_listas()
             self._criar_lojas()
-            self._criar_listas()
             self._criar_departamentos()
+            self._criar_listas()
             self._criar_areas()
             self._criar_produtos()
             # self._criar_superuser()
