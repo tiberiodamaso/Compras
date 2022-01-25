@@ -115,7 +115,7 @@ class Command(BaseCommand):
             self._criar_departamentos()
             self._criar_areas()
             self._criar_produtos()
-            self._criar_superuser()
+            # self._criar_superuser()
             print("\nBanco populado com sucesso!!")
         else:
             print("\nFalha ao popular o banco de dados..")
