@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand
+from django.utils import timezone
 
 from lojas.models import Departamento, Loja, Area
 from produtos.models import Produto, Lista, Unidade, Tipo
@@ -49,6 +50,7 @@ class Command(BaseCommand):
         print("Populando a tabela Listas")
         for i, lista in enumerate(LISTAS):
             lista_db = Lista(i + 1, lista)
+            lista_db.created = timezone.now()
             lista_db.save()
 
     def _criar_departamentos(self):
@@ -77,6 +79,7 @@ class Command(BaseCommand):
         lista = Lista.objects.filter(id=1)[0]
         departamento = Departamento.objects.filter(id=1)[0]
         area = Area.objects.filter(id=1)[0]
+        created = timezone.now()
         qtd = 0
         media = 10
 
