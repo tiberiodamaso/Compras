@@ -84,7 +84,7 @@ class Command(BaseCommand):
         media = 10
 
         produto_db = Produto(nome=nome, tipo=tipo, lista=lista, unidade=unidade, descricao=descricao, loja=loja,
-                             departamento=departamento, area=area, qtd=qtd, media=media)
+                             departamento=departamento, area=area, qtd=qtd, media=media, created=created)
         produto_db.save()
 
     # def _criar_superuser(self):
