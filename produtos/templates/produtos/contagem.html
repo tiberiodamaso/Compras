@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block html %}<html lang="pt-br">{% endblock %}
 {% block content %}
 
 <body class="d-flex flex-column h-100">
@@ -10,8 +12,8 @@
     <!--BARRA DE PESQUISA-->
     <div class="container">
       <form class="d-flex my-4">
-        <input class="form-control me-2" type="search" placeholder="pesquisar" aria-label="Search">
-        <button class="btn text-light" type="submit" style="background: #aa4d37;">Pesquisar</button>
+        <input id="textoAPesquisar" class="form-control me-2" type="search" placeholder="pesquisar" aria-label="Search">
+        <button class="btn text-light"  type="button" style="background: #aa4d37;" onclick="pesquisar(document.querySelector('#textoAPesquisar').value)">Pesquisar</button>
       </form>
     </div>
     
@@ -22,12 +24,12 @@
     <form id="produtosForm" method="post">
       {% csrf_token %}
       {% for produto in produtos %}
-      <div class="container border-bottom my-3">
-        <div class="card border-0 mb-3">
+      <div id="{{produto.nome|slugify}}" class="container border-bottom border-light py-3" style="background-color:{{ produto.area.cor }};">
+        <div class="card border-0 mb-3" style="background-color:{{ produto.area.cor }};">
           <div class="row g-0">
             <div class="col-9 px-2 btnMais" onclick="count(this, 'title')">
               <div>
-                <h5 class="card-title" style="color: #aa4d37;">{{ produto.nome }}</h5>
+                <h5 class="card-title text-dark">{{ produto.nome }}</h5>
                 <p class="card-text text-muted fs-6">{{produto.area}}</p>
 <!--                <input type="range" class="form-range" min="0" max="100" step="1" oninput="range(this)">-->
               </div>
@@ -51,4 +53,6 @@
   {% endif %}
 
 </body>
+
+<script src="{% static 'core/pesquisar.js' %}"></script>
 {% endblock %}

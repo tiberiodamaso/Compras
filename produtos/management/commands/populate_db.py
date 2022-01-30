@@ -73,6 +73,7 @@ class Command(BaseCommand):
         for i, area in enumerate(AREAS):
             area_db = Area(i + 1, area)
             area_db.departamento = departamento
+            area_db.cor = '#f5dbcb'
             area_db.save()
 
     def _criar_produtos(self):

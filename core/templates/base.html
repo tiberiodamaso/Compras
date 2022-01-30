@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="pt-br" class="h-100">
 {% load static %}
+{% block html %}{% endblock %}
 
 <head>
   <meta charset="utf-8">
@@ -17,6 +17,10 @@
   <script src="{% static 'core/count.js' %}"></script>
   
   <style>
+      body {
+        padding-bottom: 60px;
+      }
+      
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;

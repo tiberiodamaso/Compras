@@ -49,6 +49,7 @@ class Area(models.Model):
     slug = models.SlugField(verbose_name='Slug', editable=False)
     departamento = models.ForeignKey(Departamento, verbose_name='Departamento', on_delete=models.PROTECT,
                                      related_name='areas')
+    cor = models.CharField(verbose_name='Cor', max_length=7)
     ativo = models.BooleanField(verbose_name='Ativo', default=True)
 
     class Meta:
