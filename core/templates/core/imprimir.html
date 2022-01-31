@@ -6,8 +6,14 @@
         <a href="{% url 'lojas:zerar_contagem' slug %}" type="button" class="btn text-white w-100 btn-success">Zerar contagem</a>
       </div>
       <div class="col text-center">
-        <a href="{% url 'lojas:imprimir' slug %}" class="btn text-white w-100" style="background-color: #aa4d37;">Imprimir</a>
+        <a href="#" class="btn text-white w-100"  onclick="submit()" style="background-color: #aa4d37;">Imprimir</a>
       </div>
     </div>
   </div>
+  <script>
+    function submit(){
+      form = document.querySelector('#listaDeComprasForm');
+      form.submit();
+    }
+  </script>
 </footer>

@@ -1,16 +1,16 @@
-{% extends 'base.html' %}
+{% extends 'core/base.html' %}
 {% block html %}<html lang="pt-br" class="h-100">{% endblock %}
 {% block content %}
 
 <body class="d-flex flex-column h-100 justify-content-center">
 
-  {% include 'menu.html' %}
+  {% include 'core/menu.html' %}
 
   <!-- Begin page content -->
   <main class="d-flex flex-column align-items-center">
     <h2 class="pb-1 text-center text-secondary">CONTAGEM</h2>
     <h5 class="pb-4 text-center text-secondary">{{loja}} — {{departamento|capfirst}}</h5>
-    {% include 'alertas.html' %}
+    {% include 'core/alertas.html' %}
   </main>
   <footer style="background: #29292a;" class="footer fixed-bottom mt-auto py-3">
   <div class="container">

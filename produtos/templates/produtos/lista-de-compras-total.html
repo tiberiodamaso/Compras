@@ -1,10 +1,10 @@
-{% extends 'base.html' %}
+{% extends 'core/base.html' %}
 {% block html %}<html lang="pt-br">{% endblock %}
 {% block content %}
 
 <body class="d-flex flex-column h-100">
 
-  {% include 'menu.html' %}
+  {% include 'core/menu.html' %}
 
   <!-- Begin page content -->
   <main class="flex-shrink-0">
@@ -39,7 +39,7 @@
       {% endfor %}
   </main>
   {% if produtos %}
-    {% include 'imprimir.html' %}
+    {% include 'core/imprimir.html' %}
   {% endif %}
 
 </body>

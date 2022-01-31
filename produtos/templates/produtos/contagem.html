@@ -1,26 +1,21 @@
-{% extends 'base.html' %}
+{% extends 'core/base.html' %}
 {% load static %}
 {% block html %}<html lang="pt-br">{% endblock %}
 {% block content %}
 
 <body class="d-flex flex-column h-100">
 
-  {% include 'menu.html' %}
+  {% include 'core/menu.html' %}
 
   <!-- Begin page content -->
   <main class="flex-shrink-0">
     <!--BARRA DE PESQUISA-->
-    <div class="container">
-      <form class="d-flex my-4">
-        <input id="textoAPesquisar" class="form-control me-2" type="search" placeholder="pesquisar" aria-label="Search">
-        <button class="btn text-light"  type="button" style="background: #aa4d37;" onclick="pesquisar(document.querySelector('#textoAPesquisar').value)">Pesquisar</button>
-      </form>
-    </div>
+    {% include 'core/pesquisa.html' %}
     
     <!--CARDS-->
     <h2 class="pb-1 text-center text-secondary">CONTAGEM</h2>
     <h5 class="pb-4 text-center text-secondary">{{loja}} — {{departamento|capfirst}}</h5>
-    {% include 'alertas.html' %}
+    {% include 'core/alertas.html' %}
     <form id="produtosForm" method="post">
       {% csrf_token %}
       {% for produto in produtos %}
@@ -49,7 +44,7 @@
     </form>
   </main>
   {% if produtos %}
-    {% include 'footer.html' %}
+    {% include 'core/footer.html' %}
   {% endif %}
 
 </body>
