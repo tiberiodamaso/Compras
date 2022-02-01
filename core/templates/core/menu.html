@@ -16,6 +16,11 @@
           <li class="nav-item">
             <a class="nav-link text-center" href="{% url 'lojas:lista_de_compras_opcoes' %}">Lista de compras</a>
           </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link text-center" href="{% url 'usuarios:logout' %}">Sair</a>
+          </li>
+          {% endif %}
         </ul>
       </div>
     </div>
