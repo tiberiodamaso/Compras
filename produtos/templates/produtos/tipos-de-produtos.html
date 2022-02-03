@@ -1,0 +1,28 @@
+{% extends 'core/base.html' %}
+{% block html %}<html lang="pt-br" class="h-100">{% endblock %}
+{% block content %}
+
+<body class="d-flex flex-column justify-content-center h-100">
+
+  {% include 'core/menu.html' %}
+  
+  <!-- Begin page content -->
+  <h2 class="pb-4 text-center text-secondary">OPÇÕES</h2>
+  <main class="container">
+    <div class="g-3 row justify-content-center">
+    <!--CARDS-->
+    
+    {% for tipo in tipos %}
+      <div class="card col-5 mx-2 text-center">
+        <a href="{% url 'lojas:compras_por_tipo' slug tipo.nome|lower %}" class="text-decoration-none text-black">
+          <i class="bi bi-file-earmark-text fs-2 text-center" style="font-size: 2rem !important;"></i>
+          <div class="card-body text-center">
+          <p class="card-title">{{tipo.nome}}</p>
+        </div>
+        </a>
+      </div>
+    {% endfor %}
+    </div>
+  </main>
+</body>
+{% endblock %}

@@ -32,6 +32,12 @@ class ListaDeComprasOpcoes(ListView):
     template_name = 'lojas/lojas-opcoes.html'
     queryset = Loja.objects.filter(ativo=True).exclude(slug='fabrica')
 
+    # def get_context_data(self, **kwargs):
+    #     context = super(ListaDeComprasOpcoes, self).get_context_data(**kwargs)
+    #     lista = self.kwargs['lista-de-compras']
+    #     context['lista'] = lista
+    #     return context
+
 
 class Imprimir(PDFView):
     """

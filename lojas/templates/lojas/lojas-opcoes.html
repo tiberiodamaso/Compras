@@ -14,7 +14,7 @@
     <!--CARDS-->
     {% for loja in object_list %}
       <div class="card mx-2 text-center" style="width: 45%;">
-        <a href="{% url 'lojas:lista_de_compras_por_loja' loja.slug %}" class="text-decoration-none text-black">
+        <a href="{% url 'lojas:tipos_de_produtos' loja.slug %}" class="text-decoration-none text-black">
           <i class="bi bi-shop fs-2 text-center" style="font-size: 2rem !important;"></i>
           <div class="card-body text-center">
             <p class="card-title">{{loja.nome}}</p>
