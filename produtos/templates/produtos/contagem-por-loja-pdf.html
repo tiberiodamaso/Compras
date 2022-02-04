@@ -37,8 +37,8 @@
     <img src="{% static 'core/img/logo.png' %}" class="img-fluid rounded-circle">
     
     <!--CARDS-->
-    <h2 class="pb-4 text-center text-secondary">{{ loja }} - LISTA DE COMPRAS {{produto.tipo}}</h2>
-    <h3>Lista gerada em {{data}}</h3>
+    <h2 class="pb-2 text-center text-secondary">{{contagem.nome}} CONTAGEM EM</h2>
+    <h3 class="pb-4 text-center text-secondary">{{contagem.data|date:"j/m/Y - H:i"}}</h3>
     <div class="container border-bottom pt-3">
         <div class="card border-0 mb-3">
           <div class="row g-0">
@@ -47,20 +47,16 @@
               <tr>
                 <th scope="col">TIPO</th>
                 <th scope="col">ITEM</th>
-                <th scope="col">COMPRAR</th>
+                <th scope="col">QUANTIDADE</th>
                 <th scope="col">UNIDADE</th>
               </tr>
               </thead>
               <tbody>
-              {% for produto in produtos %}
+              {% for produto in contagem.ordena_produtos %}
               <tr>
-                {% if loja == 'TOTAL' %}
-                  <td>{{produto.lista__nome}}</td>
-                {% else %}
-                  <td>{{produto.tipo}}</td>
-                {% endif %}
+                <td>{{produto.tipo}}</td>
                 <td style="text-align: left !important;">{{produto.nome}}</td>
-                <td>{{produto.comprar}}</td>
+                <td>{{produto.qtd|floatformat:"0"}}</td>
                 <td>{{produto.unidade}}</td>
               </tr>
               {% endfor %}

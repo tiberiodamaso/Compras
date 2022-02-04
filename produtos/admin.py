@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from produtos.models import Produto, Unidade, Lista, Tipo
+from produtos.models import Produto, Unidade, Lista, Tipo, Contagem
 
 
 # Register your models here.
@@ -49,18 +49,13 @@ class ListaAdmin(admin.ModelAdmin):
     #     return obj.produto.comprar
 
 
-# class ContagemAdmin(admin.ModelAdmin):
-#     list_display = ['produto', 'get_loja', 'qtd', 'comprar', 'created']
-#     list_filter = ['produto']
-#     readonly_fields = ['comprar']
-#
-#     @display(description='Loja')
-#     def get_loja(self, obj):
-#         return obj.produto.loja
+class ContagemAdmin(admin.ModelAdmin):
+    list_display = ['nome', 'data']
+    list_filter = ['nome', 'data']
 
 
 admin.site.register(Unidade, UnidadeAdmin)
 admin.site.register(Lista, ListaAdmin)
 admin.site.register(Tipo, TipoAdmin)
 admin.site.register(Produto, ProdutoAdmin)
-# admin.site.register(Contagem, ContagemAdmin)
+admin.site.register(Contagem, ContagemAdmin)

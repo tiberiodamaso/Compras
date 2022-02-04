@@ -1,0 +1,66 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block html %}<html lang="pt-br" class="h-100" style="padding-top: 6rem;">{% endblock %}
+{% block content %}
+
+<body class="d-flex flex-column h-100">
+
+  {% include 'core/menu.html' %}
+
+  <!-- Begin page content -->
+  <main class="flex-shrink-0">
+    
+    <!--CARDS-->
+    <h2 class="pb-1 text-center text-secondary">CONTAGENS REALIZADAS</h2>
+      {% for contagem in contagens %}
+      <div class="container border-bottom border-light py-3">
+        <a class="text-decoration-none" href="{% url 'lojas:contagem_detalhe' contagem.id %}">
+          <div class="card border-0">
+            <div class="row g-0">
+              <div class="d-flex">
+                <h5 class="col-7 card-title" style="color:#aa4d37">{{contagem.nome}}</h5>
+                <p class="col-5 card-text text-muted fs-6">{{contagem.data|date:"j/m/Y - H:i"}}</p>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% empty %}
+      <h2 class="pb-4 text-center small text-gray">Nenhuma contagem encontrada</h2>
+      {% endfor %}
+  </main>
+
+</body>
+
+<!--<script src="{% static 'core/pesquisar.js' %}"></script>-->
+<script>
+  function slugify(texto) {
+  return texto.toString().toLowerCase()
+	.replace(/[àÀáÁâÂãäÄÅåª]+/g, 'a')       // Special Characters #1
+	.replace(/[èÈéÉêÊëË]+/g, 'e')       	// Special Characters #2
+	.replace(/[ìÌíÍîÎïÏ]+/g, 'i')       	// Special Characters #3
+	.replace(/[òÒóÓôÔõÕöÖº]+/g, 'o')       	// Special Characters #4
+	.replace(/[ùÙúÚûÛüÜ]+/g, 'u')       	// Special Characters #5
+	.replace(/[ýÝÿŸ]+/g, 'y')       		// Special Characters #6
+	.replace(/[ñÑ]+/g, 'n')       			// Special Characters #7
+	.replace(/[çÇ]+/g, 'c')       			// Special Characters #8
+	.replace(/[ß]+/g, 'ss')       			// Special Characters #9
+	.replace(/[Ææ]+/g, 'ae')       			// Special Characters #10
+	.replace(/[Øøœ]+/g, 'oe')       		// Special Characters #11
+	.replace(/[%]+/g, 'pct')       			// Special Characters #12
+	.replace(/\s+/g, '-')           		// Replace spaces with -
+  .replace(/[^\w\-]+/g, '')       		// Remove all non-word chars
+  .replace(/\-\-+/g, '-')         		// Replace multiple - with single -
+  .replace(/^-+/, '')             		// Trim - from start of text
+  .replace(/-+$/, '');
+
+}
+
+function pesquisar(texto){
+  let slug = slugify(texto);
+  let containers = document.querySelectorAll("[id*=" + slug + "]");
+  let containerId = document.querySelector('#' + containers[0].id);
+  containerId.scrollIntoView();
+}
+</script>
+{% endblock %}

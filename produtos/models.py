@@ -103,30 +103,19 @@ class Produto(models.Model):
         super().save(*args, **kwargs)
 
 
-# class Contagem(models.Model):
-#     produto = models.ForeignKey(Produto, verbose_name='Produto', on_delete=models.CASCADE, related_name='contagem')
-#     qtd = models.FloatField(verbose_name='Quantidade', blank=True, default=0)
-#     comprar = models.FloatField(verbose_name='Comprar', blank=True, default=0, editable=False)
-#     created = models.DateTimeField(verbose_name='Criado em', auto_now_add=True)
-#
-#     class Meta:
-#         verbose_name = 'Contagem'
-#         verbose_name_plural = 'Contagens'
-#         ordering = ['produto']
-#
-#     def get_produtos(self):
-#         return "\n".join([p.nome for p in self.produto.all()])
-#
-#     def calcula_comprar(self):
-#         if self.qtd > self.produto.media:
-#             comprar = 0
-#         else:
-#             comprar = self.produto.media - self.qtd
-#         return comprar
-#
-#     def save(self, *args, **kwargs):
-#         self.comprar = self.calcula_comprar()
-#         super().save(*args, **kwargs)
-#
-#     def __str__(self):
-#         return self.produto.nome
+class Contagem(models.Model):
+    nome = models.CharField(verbose_name='Nome', max_length=10)
+    data = models.DateTimeField(verbose_name='Data')
+    produtos = models.ManyToManyField(Produto, verbose_name='Produtos', related_name='contagens')
+
+    class Meta:
+        verbose_name = 'Contagem'
+        verbose_name_plural = 'Contagens'
+        ordering = ['nome']
+
+    @property
+    def ordena_produtos(self):
+        return self.produtos.all().order_by('tipo__nome', 'nome')
+
+    def __str__(self):
+        return self.nome

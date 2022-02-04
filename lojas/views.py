@@ -1,9 +1,11 @@
+import datetime
+
 from django.db.models import Sum
 from django.views.generic import ListView
 from django_renderpdf.views import PDFView
 
 from lojas.models import Loja, Departamento
-from produtos.models import Produto
+from produtos.models import Produto, Contagem
 
 
 class Departamentos(ListView):
@@ -47,7 +49,7 @@ class Imprimir(PDFView):
         """Pass some extra context to the template."""
         context = super().get_context_data(*args, **kwargs)
         slug = self.kwargs['slug']
-        comprar = self.request.GET.getlist('comprar')
+        # comprar = self.request.GET.getlist('comprar')
         produtos = []
         for obj in self.request.GET.lists():
             if 'on' in obj[1]:
@@ -61,6 +63,7 @@ class Imprimir(PDFView):
             context['loja'] = Loja.objects.get(slug=slug).nome
             # context['produtos'] = Produto.objects.filter(loja__slug=slug).order_by('tipo__nome', 'nome')
             context['produtos'] = produtos
+            context['data'] = datetime.datetime.now()
 
         return context
 
@@ -70,5 +73,28 @@ class Imprimir(PDFView):
         return f'lista-de-compras-{slug}.pdf'
 
     template_name = 'produtos/lista-de-compras-por-loja-pdf.html'
+    prompt_download = True
+    download_name = get_download_name
+
+
+class ImprimirContagem(PDFView):
+    """
+    A PDFView behaves pretty much like a TemplateView, so you can treat it as such.
+    """
+    def get_context_data(self, *args, **kwargs):
+        """Pass some extra context to the template."""
+        context = super().get_context_data(*args, **kwargs)
+        contagem = Contagem.objects.get(id=self.kwargs['pk'])
+        context['contagem'] = contagem
+        return context
+
+    def get_download_name(self, **kwargs) -> str:
+        context = super().get_context_data(**kwargs)
+        contagem = Contagem.objects.get(id=self.kwargs['pk'])
+        context['nome'] = contagem.nome
+        context['data'] = contagem.data
+        return f'contagem-{contagem.nome.lower()}-{contagem.data.strftime("%d-%m-%Y - %Hh%Mmin")}.pdf'
+
+    template_name = 'produtos/contagem-por-loja-pdf.html'
     prompt_download = True
     download_name = get_download_name

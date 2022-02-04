@@ -1,10 +1,12 @@
+import datetime
+
 from django.contrib import messages
 from django.db.models import Sum
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from lojas.models import Loja, Departamento
-from produtos.models import Produto, Lista, Tipo
+from produtos.models import Produto, Lista, Tipo, Contagem
 
 
 class ListaDeComprasPorLoja(ListView):
@@ -108,11 +110,31 @@ def zerar_contagem(request, slug):
     loja = Loja.objects.get(slug=slug)
     produtos = Produto.objects.filter(loja__slug=slug)
     context = {'produtos': produtos, 'loja': loja}
+    contagem = Contagem.objects.create(nome=loja.nome, data=datetime.datetime.now())
     for produto in produtos:
+        contagem.produtos.add(produto)
         produto.qtd = 0
         produto.save()
     messages.success(request, f'Contagem {slug} zerada!')
     return render(request, 'produtos/confirmacao-contagem-zerada.html', context)
+
+
+class Contagens(ListView):
+    ordering = 'data'
+    template_name = 'produtos/contagens.html'
+    context_object_name = 'contagens'
+
+    def get_queryset(self):
+        return Contagem.objects.all().order_by('nome', '-data')
+
+
+class ContagemDetalhe(DetailView):
+    model = Contagem
+    template_name = 'produtos/contagem-detalhe.html'
+    context_object_name = 'contagem'
+
+
+
 
 # class Produtos(ListView):
 #     ordering = 'nome'
