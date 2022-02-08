@@ -37,7 +37,7 @@
     <img src="{% static 'core/img/logo.png' %}" class="img-fluid rounded-circle">
     
     <!--CARDS-->
-    <h2 class="pb-2 text-center text-secondary">{{contagem.nome}} CONTAGEM EM</h2>
+    <h2 class="pb-2 text-center text-secondary">{{contagem.nome}} - CONTAGEM EM</h2>
     <h3 class="pb-4 text-center text-secondary">{{contagem.data|date:"j/m/Y - H:i"}}</h3>
     <div class="container border-bottom pt-3">
         <div class="card border-0 mb-3">
@@ -56,7 +56,7 @@
               <tr>
                 <td>{{produto.tipo}}</td>
                 <td style="text-align: left !important;">{{produto.nome}}</td>
-                <td>{{produto.qtd|floatformat:"0"}}</td>
+                <td>{{produto.contagem}}</td>
                 <td>{{produto.unidade}}</td>
               </tr>
               {% endfor %}

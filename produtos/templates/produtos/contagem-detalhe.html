@@ -23,7 +23,7 @@
         </div>
       </div>
     </div>
-      {% for produto in contagem.produtos.all %}
+      {% for produto in contagem.ordena_produtos %}
       <div class="container border-bottom pt-3">
         <div class="card border-0">
           <div class="row g-0">
@@ -31,19 +31,29 @@
                 <h5 class="card-title fs-6" style="color: #aa4d37;">{{ produto.nome }}</h5>
             </div >
             <div class="col-3 text-center">
-                <p class="fs-5">{{produto.qtd|floatformat:"0"}}</p>
+                <p class="fs-5">{{produto.contagem}}</p>
             </div>
           </div>
         </div>
       </div>
       {% empty %}
-      <h2 class="pb-4 text-center small text-gray">Nenhum produto encontrado nessa contagem</h2>
+      <h2 class="p-4 text-center small text-gray">Nenhum produto encontrado nessa contagem ainda</h2>
+      
       {% endfor %}
   </main>
-  {% if produtos %}
-    {% include 'core/imprimir.html' %}
-  {% endif %}
-
 </body>
-{% include 'core/imprimir-contagem.html' %}
+
+<footer class="footer fixed-bottom mt-auto py-3" style="background: #29292a;">
+  <div class="container">
+    <div class="row">
+      <div class="col text-center">
+        {% if contagem.ordena_produtos %}
+        <a href="{% url 'lojas:imprimir_contagem' contagem.id %}" class="btn text-white w-100" style="background-color: #aa4d37;">Imprimir</a>
+        {% else %}
+        <a href="{% url 'lojas:lojas' %}" class="btn text-white w-100" style="background-color: #aa4d37;">Iniciar nova contagem</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</footer>
 {% endblock %}

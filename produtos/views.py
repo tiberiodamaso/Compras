@@ -76,7 +76,7 @@ class ListaDeComprasTotal(ListView):
         return context
 
 
-def contagem(request, slug, nome):
+def finalizar_contagem(request, slug, nome):
     loja = Loja.objects.get(slug=slug)
     departamento = Departamento.objects.get(nome=nome.upper(), loja=loja)
     produtos = Produto.objects.filter(departamento__nome=nome.upper(), loja__slug=slug).order_by('area', 'nome')
@@ -84,19 +84,19 @@ def contagem(request, slug, nome):
 
     if request.method == 'POST':
         data = request.POST
-        # try:
-        #     lista = Lista.objects.get(nome=loja)
-        # except:
-        #     lista = Lista.objects.create(nome=loja)
-        # lista = Lista.objects.get_or_create(nome=loja)
+        try:
+            contagem = Contagem.objects.filter(nome=loja.nome).order_by('-data').first()
+            if not contagem:
+                contagem = Contagem.objects.create(nome=loja.nome, data=datetime.datetime.now())
+        except:
+            print('Um erro ocorreu')
+            # contagem = Contagem.objects.create(nome=loja.nome, data=datetime.datetime.now())
+        # contagem = Contagem.objects.get_or_create(nome=loja.nome, data=datetime.datetime.now())
         for index, produto_id in enumerate(data.getlist('id')):
             produto = Produto.objects.get(id=produto_id)
-            # contagem = Contagem.objects.create(produto=produto, qtd=int(data.getlist('qtd')[index]))
-            # lista.contagem.add(contagem)
-            # lista.save()
-            # contagem.produto = produto
-            # contagem.qtd = data.getlist('qtd')[index]
+            contagem.produtos.add(produto)
             produto.qtd = int(data.getlist('qtd')[index])
+            produto.contagem = produto.qtd
             produto.save()
             # contagem.save()
 
@@ -110,22 +110,31 @@ def zerar_contagem(request, slug):
     loja = Loja.objects.get(slug=slug)
     produtos = Produto.objects.filter(loja__slug=slug)
     context = {'produtos': produtos, 'loja': loja}
+    # contagem = Contagem.objects.filter(nome=loja.nome).order_by('-data').first()
     contagem = Contagem.objects.create(nome=loja.nome, data=datetime.datetime.now())
     for produto in produtos:
-        contagem.produtos.add(produto)
+        # contagem.produtos.add(produto)
+        # produto.contagem = produto.qtd
         produto.qtd = 0
         produto.save()
     messages.success(request, f'Contagem {slug} zerada!')
     return render(request, 'produtos/confirmacao-contagem-zerada.html', context)
 
 
-class Contagens(ListView):
+class ContagensRealizadas(ListView):
     ordering = 'data'
-    template_name = 'produtos/contagens.html'
+    template_name = 'produtos/contagens-realizadas.html'
     context_object_name = 'contagens'
 
+    def get_context_data(self, **kwargs):
+        context = super(ContagensRealizadas, self).get_context_data(**kwargs)
+        slug = self.kwargs['slug']
+        context['slug'] = slug
+        return context
+
     def get_queryset(self):
-        return Contagem.objects.all().order_by('nome', '-data')
+        slug = self.kwargs['slug']
+        return Contagem.objects.filter(nome=slug.upper()).order_by('nome', '-data')
 
 
 class ContagemDetalhe(DetailView):

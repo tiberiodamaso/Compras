@@ -11,17 +11,26 @@
   <main class="container">
     <div class="g-3 row justify-content-center">
     <!--CARDS-->
-    
     {% for tipo in tipos %}
       <div class="card col-5 mx-2 text-center">
         <a href="{% url 'lojas:compras_por_tipo' slug tipo.nome|lower %}" class="text-decoration-none text-black">
-          <i class="bi bi-file-earmark-text fs-2 text-center" style="font-size: 2rem !important;"></i>
+          <i class="bi bi-clipboard-check fs-2 text-center" style="font-size: 2rem !important;"></i>
           <div class="card-body text-center">
           <p class="card-title">{{tipo.nome}}</p>
         </div>
         </a>
       </div>
     {% endfor %}
+      <!-- ZERAR CONTAGEM -->
+<!--      <div class="card col-5 mx-2 text-center" style="background-color: #aa4d37;">-->
+<!--        <a href="{% url 'lojas:zerar_contagem' slug %}" class="text-decoration-none text-black">-->
+<!--          <i class="bi bi-arrow-repeat fs-2 text-center text-white" style="font-size: 2rem !important;"></i>-->
+<!--          <div class="card-body text-center">-->
+<!--            <p class="card-title text-white">ZERAR CONTAGEM</p>-->
+<!--          </div>-->
+<!--        </a>-->
+<!--      </div>-->
+      <!-- FIM DE ZERAR CONTAGEM -->
     </div>
   </main>
 </body>

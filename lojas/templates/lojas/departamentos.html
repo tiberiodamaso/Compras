@@ -31,6 +31,17 @@
     {% endfor %}
     </div>
   </main>
-  
+  <footer style="background: #29292a;" class="footer fixed-bottom mt-auto py-3">
+  <div class="container">
+    <div class="row">
+      <div class="col text-center">
+          <a class="btn btn-danger text-white text-decoration-none w-100" href="{% url 'lojas:zerar_contagem' slug %}">Zerar contagem</a>
+      </div>
+      <div class="col text-center">
+          <a class="btn text-white text-decoration-none w-100" style="background-color: #aa4d37; " href="{% url 'lojas:contagens_realizadas' slug %}">Contagens realizadas</a>
+      </div>
+    </div>
+  </div>
+</footer>
 </body>
 {% endblock %}

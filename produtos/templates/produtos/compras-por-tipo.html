@@ -31,7 +31,7 @@
         </div>
       </div>
     </div>
-      <form id="listaDeComprasForm" action="{% url 'lojas:imprimir' slug %}">
+    <form id="listaDeComprasForm" action="{% url 'lojas:imprimir' slug %}">
       {% for produto in produtos %}
       <div id="{{produto.nome|slugify}}" class="container border-bottom pt-3">
         <div class="card border-0 mb-3">
@@ -39,50 +39,58 @@
             <div class="col-6">
               <div>
                 <h5 class="card-title fs-6" style="color: #aa4d37;">{{ produto.nome }}</h5>
-                  <p class="card-text text-muted small">{{produto.tipo}} | {{ produto.unidade }}</p>
-                  
+                <p class="card-text text-muted small">{{produto.tipo}} | {{ produto.unidade }}</p>
               </div>
             </div >
             <div class="col-2 text-center">
-                <p class="fs-5">{{produto.qtd|floatformat:"0"}}</p>
+              <p class="fs-5">{{produto.qtd|floatformat:"0"}}</p>
             </div>
             <div class="col-2 text-center">
-                <p class="fs-5">{{produto.media|floatformat:"0"}}</p>
+              <p class="fs-5">{{produto.media|floatformat:"0"}}</p>
             </div>
             <div class="col-2 text-center">
-                <p class="fs-5">{{produto.comprar|floatformat:"0"}}</p>
-
+              <p class="fs-5">{{produto.comprar|floatformat:"0"}}</p>
+        
             </div>
           </div>
-          
-            <div class="row pt-3 align-items-center g-0">
+          <div class="row pt-3 align-items-center g-0">
             <div class="col-10">
               <div class="form-check">
                 <input class="form-check-input customCheckBox" name="{{produto.id}}" type="checkbox" id="id-{{produto.id}}" checked onclick="check(this)">
-              <input type="hidden" class="d-none" name="{{produto.id}}" value="{{produto.id}}">
-              <label class="form-check-label text-muted" for="id-{{produto.id}}">
-                Comprar
-              </label>
-            </div>
+                <input type="hidden" class="d-none" name="{{produto.id}}" value="{{produto.id}}">
+                <label class="form-check-label text-muted" for="id-{{produto.id}}">
+                  Comprar
+                </label>
+              </div>
             </div>
             <div class="col-2 text-center">
               <input name="{{produto.id}}" id="qtd" type="text" class="border-1 form-control text-center qtd" value="{{produto.comprar|floatformat:'0'}}">
             </div>
           </div>
-          
         </div>
       </div>
       {% empty %}
       <h2 class="pb-4 text-center small text-gray">Nenhum produto cadastrado</h2>
       {% endfor %}
-       </form>
+    </form>
   </main>
-  {% if produtos %}
-    {% include 'core/imprimir.html' %}
-  {% endif %}
+  <footer class="footer fixed-bottom mt-auto py-3" style="background: #29292a;">
+    <div class="container">
+      <div class="row">
+        <div class="col text-center">
+          <a href="#" class="btn text-white w-100"  onclick="submit()" style="background-color: #aa4d37;">Imprimir</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
 </body>
 <script>
+function submit(){
+  form = document.querySelector('#listaDeComprasForm');
+  form.submit();
+}
+
 function check(checkbox){
   if (checkbox.checked) {
     checkbox.setAttribute("value", "on");

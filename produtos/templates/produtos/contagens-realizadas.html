@@ -29,10 +29,21 @@
       <h2 class="pb-4 text-center small text-gray">Nenhuma contagem encontrada</h2>
       {% endfor %}
   </main>
+  <footer class="footer fixed-bottom mt-auto py-3" style="background: #29292a;">
+  <div class="container">
+    <div class="row">
+      <div class="col text-center">
+        {% if not contagens %}
+        <a href="{% url 'lojas:lojas' %}" class="btn text-white w-100" style="background-color: #aa4d37;">Iniciar nova contagem</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</footer>
 
 </body>
 
-<!--<script src="{% static 'core/pesquisar.js' %}"></script>-->
+
 <script>
   function slugify(texto) {
   return texto.toString().toLowerCase()

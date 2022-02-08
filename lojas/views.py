@@ -20,6 +20,7 @@ class Departamentos(ListView):
         context = super().get_context_data(*args, **kwargs)
         slug = self.kwargs['slug']
         context['loja'] = Loja.objects.get(slug=slug).nome
+        context['slug'] = slug
         return context
 
 

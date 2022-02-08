@@ -58,9 +58,10 @@ class Produto(models.Model):
                                      on_delete=models.PROTECT)
     lista = models.ForeignKey(Lista, verbose_name='Lista', related_name='produtos', on_delete=models.CASCADE)
     area = models.ForeignKey(Area, verbose_name='Área', on_delete=models.PROTECT, related_name='produtos')
-    qtd = models.FloatField(verbose_name='Quantidade', default=0)
+    qtd = models.IntegerField(verbose_name='Quantidade', default=0)
+    contagem = models.IntegerField(verbose_name='Contagem', default=0)
     media = models.IntegerField(verbose_name='Média', validators=[MaxValueValidator(10000)])
-    comprar = models.FloatField(verbose_name='Comprar', blank=True, default=0, editable=False)
+    comprar = models.IntegerField(verbose_name='Comprar', blank=True, default=0, editable=False)
     ativo = models.BooleanField(verbose_name='Ativo', default=True)
     created = models.DateTimeField(verbose_name='Criado em', auto_now_add=True)
     updated = models.DateTimeField(verbose_name='Atualizado em', auto_now=True)
@@ -68,7 +69,7 @@ class Produto(models.Model):
     class Meta:
         verbose_name = 'Produto'
         verbose_name_plural = 'Produtos'
-        ordering = ['nome']
+        ordering = ['loja', 'tipo', 'nome']
         unique_together = ('nome', 'loja')
 
     def __str__(self):

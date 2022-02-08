@@ -4,7 +4,7 @@
   <nav class="fixed-top navbar navbar-dark navbar-expand-md" style="background: #29292a;">
     <div class="container-fluid">
       <img src="{% static 'core/img/logo.png' %}" class="img-fluid rounded-circle ">
-      <a class="navbar-brand" href="{% url 'lojas:lojas' %}">COMPRAS</a>
+      <a class="navbar-brand" href="{% url 'lojas:lojas' %}">ESTOQUE</a>
       <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -14,10 +14,7 @@
             <a class="nav-link active text-center" aria-current="page" href="{% url 'lojas:lojas' %}">Contagem</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-center" href="{% url 'lojas:lista_de_compras_opcoes' %}">Lista de compras</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-center" href="{% url 'lojas:contagens' %}">Lista de contagens</a>
+            <a class="nav-link text-center" href="{% url 'lojas:lista_de_compras_opcoes' %}">Compras</a>
           </li>
           {% if user.is_authenticated %}
           <li class="nav-item">

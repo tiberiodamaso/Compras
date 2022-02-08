@@ -19,7 +19,7 @@ class TipoAdmin(admin.ModelAdmin):
 
 
 class ProdutoAdmin(admin.ModelAdmin):
-    list_display = ['nome', 'loja', 'departamento', 'area', 'tipo', 'qtd', 'media', 'comprar', 'id']
+    list_display = ['nome', 'loja', 'departamento', 'area', 'tipo', 'qtd', 'media', 'comprar', 'contagem']
     list_filter = ['nome', 'loja', 'departamento']
     search_fields = ['nome']
     readonly_fields = ['pesquisa']
@@ -50,7 +50,7 @@ class ListaAdmin(admin.ModelAdmin):
 
 
 class ContagemAdmin(admin.ModelAdmin):
-    list_display = ['nome', 'data']
+    list_display = ['nome', 'data', 'id']
     list_filter = ['nome', 'data']
 
 
