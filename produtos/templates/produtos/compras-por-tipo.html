@@ -59,10 +59,11 @@
                 <input class="form-check-input customCheckBox" name="{{produto.id}}" type="checkbox" id="id-{{produto.id}}" checked onclick="check(this)">
                 <input type="hidden" class="d-none" name="{{produto.id}}" value="{{produto.id}}">
                 <label class="form-check-label text-muted" for="id-{{produto.id}}">
-                  Comprar
+                  Comprar | {{produto.unidade_compra}}
                 </label>
               </div>
             </div>
+
             <div class="col-2 text-center">
               <input name="{{produto.id}}" id="qtd" type="text" class="border-1 form-control text-center qtd" value="{{produto.comprar|floatformat:'0'}}">
             </div>
