@@ -7,7 +7,7 @@
   {% include 'core/menu.html' %}
 
   <!-- Begin page content -->
-  <h2 class="pb-4 text-center text-secondary">{{loja|capfirst}} - DEPARTAMENTOS</h2>
+  <h2 class="pb-4 text-center text-secondary">{{loja}} - DEPARTAMENTOS</h2>
   <main class="container">
     <div class="g-3 row justify-content-center">
     <!--CARDS-->
@@ -35,13 +35,33 @@
   <div class="container">
     <div class="row">
       <div class="col text-center">
-          <a class="btn btn-danger text-white text-decoration-none w-100" href="{% url 'lojas:zerar_contagem' slug %}">Zerar contagem</a>
+          <a data-bs-toggle="modal" data-bs-target="#zerarContagem" class="btn btn-danger text-white text-decoration-none w-100">Zerar contagem</a>
       </div>
       <div class="col text-center">
-          <a class="btn text-white text-decoration-none w-100" style="background-color: #aa4d37; " href="{% url 'lojas:contagens_realizadas' slug %}">Contagens realizadas</a>
+          <a class="btn text-white text-decoration-none w-100" style="background-color: #aa4d37;" href="{% url 'lojas:contagens_realizadas' slug %}">Contagens realizadas</a>
       </div>
     </div>
   </div>
 </footer>
+
+<!-- Modal Zerar Contagem -->
+<div class="modal fade" id="zerarContagem" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center">
+        <h5 class="modal-title text-muted" id="finalizarModalLabel">ZERAR CONTAGEM</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <div class="modal-body">
+        <p>Deseja realmente zerar a contagem de todos os produtos da loja {{loja}}?</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" data-bs-dismiss="modal" class="btn btn-secondary">Cancelar</button>
+        <a href="{% url 'lojas:zerar_contagem' slug %}" class="btn text-white" style="background-color: #aa4d37;">Confirmar</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 {% endblock %}

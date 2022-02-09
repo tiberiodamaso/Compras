@@ -68,7 +68,7 @@ class ListaDeComprasTotal(ListView):
     context_object_name = 'produtos'
 
     def get_queryset(self):
-        return Produto.objects.all().values('nome', 'lista__nome', 'unidade__nome').annotate(total=Sum('qtd'))
+        return Produto.objects.all().values('nome', 'lista__nome', 'unidade_contagem__nome').annotate(total=Sum('qtd'))
 
     def get_context_data(self, **kwargs):
         context = super(ListaDeComprasTotal, self).get_context_data(**kwargs)

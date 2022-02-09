@@ -13,7 +13,7 @@ class DepartamentoAdmin(admin.ModelAdmin):
 
 
 class AreaAdmin(admin.ModelAdmin):
-    list_display = ['nome', 'slug',  'departamento', 'cor', 'ativo']
+    list_display = ['nome', 'departamento', 'slug', 'cor', 'ativo']
     list_filter = ['departamento', 'nome']
 
 

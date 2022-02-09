@@ -34,7 +34,7 @@ class Departamento(models.Model):
         unique_together = ['nome', 'loja']
 
     def __str__(self):
-        return self.nome
+        return f'{self.loja} - {self.nome}'
 
     def get_absolute_url(self):
         return reverse('departamento:detail', kwargs={'slug': self.slug})

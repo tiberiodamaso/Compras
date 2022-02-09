@@ -32,7 +32,6 @@ class Tipo(models.Model):
 
 class Lista(models.Model):
     nome = models.CharField(verbose_name='Lista de compras', max_length=50)
-    # contagem = models.ManyToManyField(Contagem, verbose_name='Contagem', related_name='lista')
     created = models.DateTimeField(verbose_name='Criada em', auto_now_add=True)
     updated = models.DateTimeField(verbose_name='Atualizada em', auto_now=True)
     ativo = models.BooleanField(verbose_name='Ativo', default=True)
@@ -49,7 +48,9 @@ class Produto(models.Model):
     nome = models.CharField(verbose_name='Nome', max_length=50)
     tipo = models.ForeignKey(Tipo, verbose_name='Tipo', max_length=50, on_delete=models.PROTECT,
                              related_name='produtos')
-    unidade = models.ForeignKey(Unidade, verbose_name='Unidade', max_length=2, on_delete=models.PROTECT)
+    unidade_contagem = models.ForeignKey(Unidade, verbose_name='Unidade contagem', max_length=2,
+                                         related_name='produtos', on_delete=models.PROTECT)
+    unidade_compra = models.ForeignKey(Unidade, verbose_name='Unidade compra', max_length=2, on_delete=models.PROTECT)
     descricao = models.TextField(verbose_name='Descrição', blank=True)
     pesquisa = models.TextField(verbose_name='Conteúdo pesquisável', editable=False)
     loja = models.ForeignKey(Loja, verbose_name='Loja', related_name='produtos',
