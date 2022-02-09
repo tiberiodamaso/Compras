@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-wppsi9u_&veln_(rhja9wafa=)0r)6n1u&l&7zg_gekx@4m+1s
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['tiberio.pythonanywhere.com', 'localhost', '127.0.0.1']
 
 # Application definition
 
