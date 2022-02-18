@@ -5,8 +5,10 @@ from django.db.models import Sum
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 
-from lojas.models import Loja, Departamento
-from produtos.models import Produto, Lista, Tipo, Contagem
+from lojas.models import Loja, Departamento, Area
+from produtos.forms import PlanilhaForm
+from produtos.models import Produto, Lista, Tipo, Contagem, Unidade
+from produtos.utils import read_csv
 
 
 class ListaDeComprasPorLoja(ListView):
@@ -143,6 +145,26 @@ class ContagemDetalhe(DetailView):
     context_object_name = 'contagem'
 
 
+def cadastra_produtos_planilha(request):
+    form = PlanilhaForm()
+    if request.method == 'POST':
+        data = request.FILES
+        produtos_a_cadastrar = read_csv(data)
+        for index, produto in enumerate(produtos_a_cadastrar):
+            nome = produto['PRODUTO']
+            tipo = Tipo.objects.get(nome=produto['TIPO'])
+            unidade_contagem = Unidade.objects.get(nome=produto['UNIDADE CONTAGEM'])
+            unidade_compra = Unidade.objects.get(nome=produto['UNIDADE COMPRA'])
+            loja = Loja.objects.get(nome=produto['LOJA'])
+            departamento = Departamento.objects.get(nome=produto['DEPARTAMENTO'], loja=loja)
+            area = Area.objects.get(nome=produto['AREA'])
+            lista = Lista.objects.get(nome=produto['LOJA'])
+            media = produto['MEDIA']
+            Produto.objects.create(nome=nome, tipo=tipo, unidade_contagem=unidade_contagem,
+                                   unidade_compra=unidade_compra, loja=loja, departamento=departamento,
+                                   area=area, lista=lista, media=media)
+        return render(request, 'produtos/confirmacao-cadastro-produtos.html')
+    return render(request, 'produtos/planilha.html', {'form': form})
 
 
 # class Produtos(ListView):

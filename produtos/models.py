@@ -70,7 +70,7 @@ class Produto(models.Model):
     class Meta:
         verbose_name = 'Produto'
         verbose_name_plural = 'Produtos'
-        ordering = ['loja', 'tipo', 'nome']
+        ordering = ['tipo', 'loja', 'nome']
         unique_together = ('nome', 'loja')
 
     def __str__(self):

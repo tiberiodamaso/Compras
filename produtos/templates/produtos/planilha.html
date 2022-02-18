@@ -1,0 +1,42 @@
+{% extends 'core/base.html' %}
+{% block html %}<html lang="pt-br" class="h-100">{% endblock %}
+{% block content %}
+
+<body class="d-flex flex-column h-100 justify-content-center">
+
+  {% include 'core/menu.html' %}
+
+  <!-- Begin page content -->
+  <main class="d-flex flex-column align-items-center">
+    <h2 class="pb-1 text-center text-secondary">PLANILHA DE PRODUTOS</h2>
+<!--    <h5 class="pb-4 text-center text-secondary">Envie a planilha de produtos a serem cadastrados</h5>-->
+    {% include 'core/alertas.html' %}
+    
+    <form id="planihaForm" method="post" class="align-items-center d-flex flex-column" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="container py-3">
+          <div class="row">
+          {{ form.as_p }}
+          </div>
+        </div>
+      </div>
+      
+      <button type="submit" class="btn text-white" style="background-color: #aa4d37;">Enviar</button>
+    </form>
+    
+  </main>
+  <footer style="background: #29292a;" class="footer fixed-bottom mt-auto py-3">
+  <div class="container">
+    <div class="row">
+      <div class="col text-center">
+        <a href="{% url 'lojas:lojas' %}" class="btn btn-success text-white w-100">Início</a>
+      </div>
+      <div class="col text-center">
+        <a href="{% url 'usuarios:logout' %}" class="btn btn-danger text-white w-100">Sair</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+{% endblock %}
