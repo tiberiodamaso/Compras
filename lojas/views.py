@@ -3,6 +3,7 @@ import datetime
 from django.db.models import Sum
 from django.views.generic import ListView
 from django_renderpdf.views import PDFView
+from guardian.shortcuts import get_objects_for_user
 
 from lojas.models import Loja, Departamento
 from produtos.models import Produto, Contagem
@@ -28,6 +29,16 @@ class Lojas(ListView):
     ordering = 'nome'
     template_name = 'lojas/lojas.html'
     queryset = Loja.objects.filter(ativo=True)
+
+
+class Lojas2(ListView):
+    template_name = 'lojas/lojas.html'
+
+    def get_queryset(self):
+        user = self.request.user
+        lojas = Loja.objects.all()
+        queryset = get_objects_for_user(user, ['marista', 'passeio', 'fabrica'], klass=lojas, any_perm=True)
+        return queryset
 
 
 class ListaDeComprasOpcoes(ListView):

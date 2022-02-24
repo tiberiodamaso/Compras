@@ -1,6 +1,6 @@
 from django.urls import path
 
-from lojas.views import Lojas, Departamentos, ListaDeComprasOpcoes, Imprimir, ImprimirContagem
+from lojas.views import Departamentos, ListaDeComprasOpcoes, Imprimir, ImprimirContagem, Lojas2
 from produtos.views import finalizar_contagem, zerar_contagem, ListaDeComprasTotal, TiposDeProdutos, \
     ComprasPorTipo, ContagensRealizadas, ContagemDetalhe
 
@@ -9,7 +9,7 @@ app_name = 'lojas'
 urlpatterns = [
 
     # LOJAS
-    path('', Lojas.as_view(), name='lojas'),
+    path('', Lojas2.as_view(), name='lojas'),
     path('<slug:slug>/departamentos/', Departamentos.as_view(), name='departamentos'),
     path('<slug:slug>/departamentos/<str:nome>/', finalizar_contagem, name='contagem'),
 

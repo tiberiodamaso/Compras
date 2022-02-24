@@ -160,12 +160,12 @@ def cadastra_produtos_planilha(request):
             area = Area.objects.get(nome=produto['AREA'])
             lista = Lista.objects.get(nome=produto['LOJA'])
             media = produto['MEDIA']
-            Produto.objects.create(nome=nome, tipo=tipo, unidade_contagem=unidade_contagem,
-                                   unidade_compra=unidade_compra, loja=loja, departamento=departamento,
-                                   area=area, lista=lista, media=media)
+            Produto.objects.update_or_create(nome=nome, tipo=tipo, unidade_contagem=unidade_contagem,
+                                             unidade_compra=unidade_compra, loja=loja, departamento=departamento,
+                                             area=area, lista=lista, media=media)
+        messages.success(request, 'Produtos cadastrados com sucesso!')
         return render(request, 'produtos/confirmacao-cadastro-produtos.html')
     return render(request, 'produtos/planilha.html', {'form': form})
-
 
 # class Produtos(ListView):
 #     ordering = 'nome'
