@@ -138,3 +138,4 @@ core/migrations/
 /produtos/__init__.py
 /core/__init__.py
 /config/__init__.py
+.vscode/launch.json
