@@ -24,6 +24,23 @@ class Departamentos(ListView):
         context['slug'] = slug
         return context
 
+class Departamentos2(ListView):
+    ordering = 'nome'
+    template_name = 'lojas/departamentos.html'
+
+    def get_queryset(self):
+        user = self.request.user
+        departamentos = Departamento.objects.all()
+        queryset = get_objects_for_user(user, ['cozinha marista', 'cozinha passeio'], klass=departamentos, any_perm=True)
+        return queryset
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        slug = self.kwargs['slug']
+        context['loja'] = Loja.objects.get(slug=slug).nome
+        context['slug'] = slug
+        return context
+
 
 class Lojas(ListView):
     ordering = 'nome'

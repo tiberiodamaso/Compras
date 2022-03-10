@@ -22,4 +22,4 @@ admin.site.register(Departamento, DepartamentoAdmin)
 admin.site.register(Area, AreaAdmin)
 admin.site.site_header = 'Caseratto'
 admin.site.site_title = 'Caseratto'
-admin.site.index_title = 'Administração do Compras'
+admin.site.index_title = 'Administração do Estoque'

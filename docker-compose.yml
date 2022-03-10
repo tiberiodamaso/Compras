@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+
+  db:
+      image: postgres:14.2
+      restart: always
+      env_file:
+        - .env
+      ports:
+        - "5432:5432"
+      volumes:
+        - ./db-data:/var/lib/postegresql/data/
+
+  app:
+    build:
+      context: .
+    restart: always
+    environment:
+      TZ: "America/Sao_Paulo"
+    ports:
+      - "8000:8000"
+    volumes:
+      - static_files:/static
+      - media_files:/media
+    depends_on:
+      - db
+
+  
+
+
+# Declara a existência dos volumes nos containers
+volumes:
+  static_files:
+  media_files:

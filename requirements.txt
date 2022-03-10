@@ -10,6 +10,7 @@ html5lib==1.1
 numpy==1.22.2
 pandas==1.4.1
 Pillow==9.0.1
+psycopg2-binary==2.9.3
 pycparser==2.21
 pydyf==0.1.2
 pyphen==0.12.0

@@ -14,6 +14,11 @@ class Loja(models.Model):
     class Meta:
         verbose_name = 'Loja'
         verbose_name_plural = 'Lojas'
+        permissions = (
+            ('fabrica', 'Pode acessar fabrica'),
+            ('marista', 'Pode acessar marista'),
+            ('passeio', 'Pode acessar passeio'),
+        )
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.nome)
@@ -32,6 +37,15 @@ class Departamento(models.Model):
         verbose_name_plural = 'Departamentos'
         ordering = ['loja']
         unique_together = ['nome', 'loja']
+        permissions = (
+            ('cozinha marista', 'Pode acessar cozinha do marista'),
+            ('bar marista', 'Pode acessar bar do marista'),
+            ('demais marista', 'Pode acessar demais do marista'),
+            ('cozinha passeio', 'Pode acessar cozinha do passeio'),
+            ('bar passeio', 'Pode acessar bar do passeio'),
+            ('demais passeio', 'Pode acessar demais do passeio'),
+            
+        )
 
     def __str__(self):
         return f'{self.loja} - {self.nome}'
