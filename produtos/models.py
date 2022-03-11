@@ -7,7 +7,7 @@ from lojas.models import Departamento, Loja, Area
 
 
 class Unidade(models.Model):
-    nome = models.CharField(verbose_name='Unidade', max_length=2)
+    nome = models.CharField(verbose_name='Unidade', max_length=10)
     ativo = models.BooleanField(verbose_name='Ativo', default=True)
 
     class Meta:
@@ -71,7 +71,7 @@ class Produto(models.Model):
         verbose_name = 'Produto'
         verbose_name_plural = 'Produtos'
         ordering = ['tipo', 'loja', 'nome']
-        unique_together = ('nome', 'loja')
+        unique_together = ('nome', 'tipo', 'loja', 'departamento', 'area')
 
     def __str__(self):
         return self.nome

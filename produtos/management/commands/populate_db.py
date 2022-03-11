@@ -4,15 +4,16 @@ from django.utils import timezone
 from lojas.models import Departamento, Loja, Area
 from produtos.models import Produto, Lista, Unidade, Tipo
 
-UNIDADES = ['KG', 'SC', 'FD', 'UN', 'ML', 'L']
-TIPOS = ['ATACADISTA', 'BEBIDAS', 'EMBALAGENS', 'DIVERSOS', 'POLPAS', 'IN NATURA', 'CARNES PRODUZIR',
-          'COZINHA PRODUZIR']
+UNIDADES = ['BALDE1,3KG', 'BARRA3KG', 'BARRA4KG', 'BARRA7KG', 'BISNAGA', 'CX', 'CX20', 'CX25', 'CX12', 'CX12KG', 'CX14', 'CX15', 'CX15KG', 
+'CX16', 'CX2', 'CX200', 'CX2000', 'CX20KG', 'CX22', 'CX24', 'CX27', 'CX2BARRAS', 'CX30', 'CX300', 'CX4', 'CX40', 'CX5', 'CX5KG', 'CX6', 'CX6KG',
+'CX7', 'CX7KG', 'CX700', 'CX8', 'FD', 'FD6', 'FD10', 'FD100', 'FD12', 'FD30', 'FD5', 'KG', 'MILHEIRO', 'PCT10', 'PCT12', 'PCT25', 'PCT500G', 'PCT5KG',
+'PCT6', 'PCT6UND', 'PEÇA7KG', 'RODELA6UND', 'ROLO', 'ROLO500UND', 'SACO', 'UND', 'UND400G']
+
+TIPOS = ['ATACADO', 'BEBIDAS', 'DIVERSOS', 'EMBALAGEM', 'IN NATURA', 'POLPAS', 'PRODUTOS PROCESSADOS', 'VINHOS']
 LOJAS = ['MARISTA', 'PASSEIO', 'FÁBRICA']
 LISTAS = ['MARISTA', 'PASSEIO']
-DEPARTAMENTOS = ['COZINHA', 'BAR', 'DEMAIS', 'FÁBRICA']
-AREAS = ['CÂMARA CONGELADA', 'CÂMARA RESFRIADA', 'SECOS', 'ATACADISTA', 'CERVEJAS', 'POLPAS', 'MATERIAL DE LIMPEZA',
-         'BOQUETA', 'CAIXA', 'VINHOS']
-
+DEPARTAMENTOS = ['BAR', 'COZINHA', 'DEMAIS', 'DEPÓSITO']
+AREAS = ['BEBIDAS', 'CÂMARA CONGELADA', 'CÂMARA RESFRIADA', 'POLPAS', 'SECOS', 'VINHOS']
 
 class Command(BaseCommand):
 
@@ -121,7 +122,7 @@ class Command(BaseCommand):
             self._criar_departamentos()
             self._criar_listas()
             self._criar_areas()
-            self._criar_produtos()
+            # self._criar_produtos()
             # self._criar_superuser()
             print("\nBanco populado com sucesso!!")
         else:

@@ -20,7 +20,7 @@ class TipoAdmin(admin.ModelAdmin):
 
 class ProdutoAdmin(admin.ModelAdmin):
     list_display = ['tipo', 'nome', 'loja', 'departamento', 'area', 'qtd', 'media', 'comprar', 'contagem']
-    list_filter = ['tipo', 'nome', 'loja', 'departamento', 'area']
+    list_filter = ['tipo', 'loja', 'departamento', 'area']
     search_fields = ['nome']
     readonly_fields = ['pesquisa']
     list_display_links =['nome']

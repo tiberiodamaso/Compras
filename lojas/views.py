@@ -9,22 +9,22 @@ from lojas.models import Loja, Departamento
 from produtos.models import Produto, Contagem
 
 
+# class Departamentos(ListView):
+    # ordering = 'nome'
+    # template_name = 'lojas/departamentos.html'
+
+    # def get_queryset(self):
+    #     slug = self.kwargs['slug']
+    #     return Departamento.objects.filter(loja__slug=slug)
+
+    # def get_context_data(self, *args, **kwargs):
+        # context = super().get_context_data(*args, **kwargs)
+        # slug = self.kwargs['slug']
+        # context['loja'] = Loja.objects.get(slug=slug).nome
+        # context['slug'] = slug
+        # return context
+
 class Departamentos(ListView):
-    ordering = 'nome'
-    template_name = 'lojas/departamentos.html'
-
-    def get_queryset(self):
-        slug = self.kwargs['slug']
-        return Departamento.objects.filter(loja__slug=slug)
-
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        slug = self.kwargs['slug']
-        context['loja'] = Loja.objects.get(slug=slug).nome
-        context['slug'] = slug
-        return context
-
-class Departamentos2(ListView):
     ordering = 'nome'
     template_name = 'lojas/departamentos.html'
 
@@ -42,13 +42,13 @@ class Departamentos2(ListView):
         return context
 
 
+# class Lojas(ListView):
+    # ordering = 'nome'
+    # template_name = 'lojas/lojas.html'
+    # queryset = Loja.objects.filter(ativo=True)
+
+
 class Lojas(ListView):
-    ordering = 'nome'
-    template_name = 'lojas/lojas.html'
-    queryset = Loja.objects.filter(ativo=True)
-
-
-class Lojas2(ListView):
     template_name = 'lojas/lojas.html'
 
     def get_queryset(self):

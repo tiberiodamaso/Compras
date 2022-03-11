@@ -8,7 +8,7 @@ from django.views.generic import ListView, DetailView
 from lojas.models import Loja, Departamento, Area
 from produtos.forms import PlanilhaForm
 from produtos.models import Produto, Lista, Tipo, Contagem, Unidade
-from produtos.utils import read_csv
+from produtos.utils import read_csv, get_unidade_por_nome, cleaner
 
 
 class ListaDeComprasPorLoja(ListView):
@@ -147,22 +147,24 @@ class ContagemDetalhe(DetailView):
 
 def cadastra_produtos_planilha(request):
     form = PlanilhaForm()
+    unidades = Unidade.objects.all()
     if request.method == 'POST':
         data = request.FILES
         produtos_a_cadastrar = read_csv(data)
         for index, produto in enumerate(produtos_a_cadastrar):
-            nome = produto['PRODUTO']
+            nome = produto['PRODUTO'].upper()
             tipo = Tipo.objects.get(nome=produto['TIPO'])
-            unidade_contagem = Unidade.objects.get(nome=produto['UNIDADE CONTAGEM'])
-            unidade_compra = Unidade.objects.get(nome=produto['UNIDADE COMPRA'])
             loja = Loja.objects.get(nome=produto['LOJA'])
             departamento = Departamento.objects.get(nome=produto['DEPARTAMENTO'], loja=loja)
             area = Area.objects.get(nome=produto['AREA'])
+            unidade_contagem = Unidade.objects.get(nome=produto['UNIDADE CONTAGEM'])
+            unidade_compra = Unidade.objects.get(nome=produto['UNIDADE COMPRA'])
             lista = Lista.objects.get(nome=produto['LOJA'])
-            media = produto['MEDIA']
+            media = produto['MÉDIA DE REQUISIÇÃO']
             Produto.objects.update_or_create(nome=nome, tipo=tipo, unidade_contagem=unidade_contagem,
                                              unidade_compra=unidade_compra, loja=loja, departamento=departamento,
                                              area=area, lista=lista, media=media)
+            print()
         messages.success(request, 'Produtos cadastrados com sucesso!')
         return render(request, 'produtos/confirmacao-cadastro-produtos.html')
     return render(request, 'produtos/planilha.html', {'form': form})
