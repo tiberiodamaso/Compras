@@ -30,8 +30,10 @@ class Departamentos(ListView):
 
     def get_queryset(self):
         user = self.request.user
+        slug = self.kwargs['slug']
+        loja = Loja.objects.get(slug=slug)
         departamentos = Departamento.objects.all()
-        queryset = get_objects_for_user(user, ['cozinha marista', 'cozinha passeio'], klass=departamentos, any_perm=True)
+        queryset = get_objects_for_user(user, ['cozinha marista', 'cozinha passeio'], klass=departamentos, any_perm=True).filter(loja=loja)
         return queryset
 
     def get_context_data(self, *args, **kwargs):
