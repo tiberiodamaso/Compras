@@ -17,11 +17,11 @@ urlpatterns = [
     path('compras/', ListaDeComprasOpcoes.as_view(), name='lista_de_compras_opcoes'),
     # path('compras/<slug:slug>/', ListaDeComprasPorLoja.as_view(), name='lista_de_compras_por_loja'),
     path('compras/<slug:slug>/opcoes/', TiposDeProdutos.as_view(), name='tipos_de_produtos'),
-    path('compras/<slug:slug>/<str:nome>/', ComprasPorTipo.as_view(), name='compras_por_tipo'),
+    path('compras/<slug:slug>/<str:tipo>/', ComprasPorTipo.as_view(), name='compras_por_tipo'),
     path('compras-total/', ListaDeComprasTotal.as_view(), name='lista_de_compras_total'),
 
     # IMPRIMIR
-    path('imprimir/compras/<slug:slug>/', Imprimir.as_view(), name='imprimir'),
+    path('imprimir/compras/<slug:slug>/<str:tipo>/', Imprimir.as_view(), name='imprimir'),
     path('imprimir/contagem/<int:pk>/', ImprimirContagem.as_view(), name='imprimir_contagem'),
 
     # CONTAGEM

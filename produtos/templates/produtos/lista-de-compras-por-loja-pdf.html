@@ -37,7 +37,7 @@
     <img src="{% static 'core/img/logo.png' %}" class="img-fluid rounded-circle">
     
     <!--CARDS-->
-    <h2 class="pb-4 text-center text-secondary">{{ loja }} - LISTA DE COMPRAS {{produto.tipo}}</h2>
+    <h2 class="pb-4 text-center text-secondary">{{ loja }} - COMPRAR - {{tipo|upper}}</h2>
     <h3>Lista gerada em {{data}}</h3>
     <div class="container border-bottom pt-3">
         <div class="card border-0 mb-3">
@@ -46,10 +46,10 @@
               <thead>
               <tr>
                 <th scope="col">TIPO</th>
-                <th scope="col">DEPARTAMENTO</th>
                 <th scope="col">PRODUTO</th>
+                <th scope="col">MÉDIA</th>
                 <th scope="col">COMPRAR</th>
-                <th scope="col">UNIDADE</th>
+                <th scope="col">UND</th>
               </tr>
               </thead>
               <tbody>
@@ -60,8 +60,8 @@
                 {% else %}
                   <td>{{produto.tipo}}</td>
                 {% endif %} 
-                <td>{{produto.departamento.nome}}</td>
                 <td style="text-align: left !important;">{{produto.nome}}</td>
+                <td>{{produto.media}}</td>
                 <td>{{produto.comprar}}</td>
                 <td>{{produto.unidade_compra}}</td>
               </tr>

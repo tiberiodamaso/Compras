@@ -52,15 +52,19 @@ class ComprasPorTipo(ListView):
 
     def get_queryset(self):
         slug = self.kwargs['slug']
-        tipo = self.kwargs['nome']
+        tipo = self.kwargs['tipo']
         lista = Lista.objects.filter(nome=slug.upper()).order_by('created').first()
-        return lista.produtos.filter(tipo__nome=tipo.upper()).exclude(comprar=0).order_by('nome')
+        lista_por_tipo = lista.produtos.filter(tipo__nome=tipo.upper()).order_by('nome')
+        lista_agrupada_por_total = lista_por_tipo.values('nome', 'unidade_contagem__nome', 'unidade_compra__nome' ).annotate(comprar=Sum('comprar'), qtd=Sum('qtd'), media=Sum('media'))
+        lista_agrupada_por_total = lista_agrupada_por_total.exclude(comprar=0)
+        # return lista.produtos.filter(tipo__nome=tipo.upper()).exclude(comprar=0).order_by('nome')
+        return lista_agrupada_por_total
 
     def get_context_data(self, **kwargs):
         context = super(ComprasPorTipo, self).get_context_data(**kwargs)
         context['loja'] = Loja.objects.get(slug=self.kwargs['slug']).nome
         context['slug'] = self.kwargs['slug']
-        context['tipo'] = self.kwargs['nome']
+        context['tipo'] = self.kwargs['tipo']
         return context
 
 
@@ -81,7 +85,7 @@ class ListaDeComprasTotal(ListView):
 def finalizar_contagem(request, slug, nome):
     loja = Loja.objects.get(slug=slug)
     departamento = Departamento.objects.get(nome=nome.upper(), loja=loja)
-    produtos = Produto.objects.filter(departamento__nome=nome.upper(), loja__slug=slug).order_by('area', 'nome')
+    produtos = Produto.objects.filter(departamento__nome=nome.upper(), loja__slug=slug).order_by('numero')
     context = {'produtos': produtos, 'loja': loja, 'departamento': departamento}
 
     if request.method == 'POST':
@@ -153,79 +157,21 @@ def cadastra_produtos_planilha(request):
         produtos_a_cadastrar = read_csv(data)
         for index, produto in enumerate(produtos_a_cadastrar):
             nome = produto['PRODUTO'].upper()
+            numero = produto['N']
             tipo = Tipo.objects.get(nome=produto['TIPO'])
             loja = Loja.objects.get(nome=produto['LOJA'])
             departamento = Departamento.objects.get(nome=produto['DEPARTAMENTO'], loja=loja)
             area = Area.objects.get(nome=produto['AREA'])
-            unidade_contagem = Unidade.objects.get(nome=produto['UNIDADE CONTAGEM'])
-            unidade_compra = Unidade.objects.get(nome=produto['UNIDADE COMPRA'])
+            unidade_contagem = Unidade.objects.get(nome=produto['UNIDADE DE CONTAGEM'])
+            unidade_compra = Unidade.objects.get(nome=produto['UNIDADE DE COMPRA'])
             lista = Lista.objects.get(nome=produto['LOJA'])
-            media = produto['MÉDIA DE REQUISIÇÃO']
-            Produto.objects.update_or_create(nome=nome, tipo=tipo, unidade_contagem=unidade_contagem,
+            media = produto['MÉDIA DE COMPRA']
+            requisicao = produto['MÉDIA DE REQUISIÇÃO']
+            Produto.objects.update_or_create(nome=nome, numero=numero, tipo=tipo, unidade_contagem=unidade_contagem,
                                              unidade_compra=unidade_compra, loja=loja, departamento=departamento,
-                                             area=area, lista=lista, media=media)
+                                             area=area, lista=lista, media=media, requisicao=requisicao)
             print()
         messages.success(request, 'Produtos cadastrados com sucesso!')
         return render(request, 'produtos/confirmacao-cadastro-produtos.html')
     return render(request, 'produtos/planilha.html', {'form': form})
 
-# class Produtos(ListView):
-#     ordering = 'nome'
-#     template_name = 'produtos/contagem.html'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super(Produtos, self).get_context_data(**kwargs)
-#         context['form'] = ProdutoForm()
-#         context['loja'] = self.kwargs['slug'].capitalize()
-#         context['departamento'] = self.kwargs['nome'].capitalize()
-#         return context
-#
-#     def get_queryset(self):
-#         slug = self.kwargs['slug']
-#         nome = self.kwargs['nome'].upper()
-#         return Produto.objects.filter(departamento__loja__slug=slug, departamento__nome=nome)
-#
-#
-# class Produtos(UpdateView):
-#     ordering = 'nome'
-#     template_name = 'produtos/contagem.html'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super(Produtos, self).get_context_data(**kwargs)
-#         context['form'] = ProdutoForm()
-#         context['loja'] = self.kwargs['slug'].capitalize()
-#         context['departamento'] = self.kwargs['nome'].capitalize()
-#         return context
-#
-#     def get_queryset(self, *args, **kwargs):
-#         slug = self.kwargs['slug']
-#         nome = self.kwargs['nome'].upper()
-#         queryset = Produto.objects.filter(departamento__loja__slug=slug, departamento__nome=nome)
-#         return queryset
-#
-#     def get(self, request, *args, **kwargs):
-#         queryset = self.get_queryset()
-#         # return render(request, 'produtos/contagem.html', {'object_list': queryset})
-#         return super().get(request, *args, **kwargs)
-#
-#     def post(self, request, *args, **kwargs):
-#         data = request.POST
-#         for index, produto_id in enumerate(data.getlist('id')):
-#             produto = Produto.objects.get(id=produto_id)
-#             produto.qtd = data.getlist('qtd')[index]
-#             produto.save()
-#         messages.success(request, 'Contagem salva com sucesso!')
-#         return super().post(request, *args, **kwargs)
-
-
-# def Contagem(request):
-#     if request.method == 'POST':
-#         data = request.POST
-#         for index, produto_id in enumerate(data.getlist('id')):
-#             produto = Produto.objects.get(id=produto_id)
-#             produto.qtd = data.getlist('qtd')[index]
-#             produto.save()
-#         messages.success(request, 'Contagem salva com sucesso!')
-#         return render(request, 'produtos/confirmacao-lista-de-compras-por-loja.html')
-#
-#     return render(request, 'produtos/contagem.html')

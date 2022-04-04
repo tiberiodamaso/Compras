@@ -43,3 +43,4 @@ def get_unidade_por_nome(unidades, nome):
     for unidade in unidades:
         if cleaner(unidade.nome) == nome:
             return unidade
+            

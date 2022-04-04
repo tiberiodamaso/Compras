@@ -13,13 +13,13 @@ class UnidadeAdmin(admin.ModelAdmin):
 
 
 class TipoAdmin(admin.ModelAdmin):
-    list_display = ['id', 'nome', 'ativo']
+    list_display = ['id', 'nome', 'ativo', 'cor']
     list_filter = ['nome', 'ativo']
     search_fields = ['nome']
 
 
 class ProdutoAdmin(admin.ModelAdmin):
-    list_display = ['tipo', 'nome', 'loja', 'departamento', 'area', 'qtd', 'media', 'comprar', 'contagem']
+    list_display = ['numero', 'tipo', 'nome', 'loja', 'departamento', 'qtd', 'media', 'comprar', 'contagem', 'requisicao']
     list_filter = ['tipo', 'loja', 'departamento', 'area']
     search_fields = ['nome']
     readonly_fields = ['pesquisa']

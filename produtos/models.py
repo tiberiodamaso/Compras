@@ -21,6 +21,7 @@ class Unidade(models.Model):
 class Tipo(models.Model):
     nome = models.CharField(verbose_name='Tipo', max_length=50)
     ativo = models.BooleanField(verbose_name='Ativo', default=True)
+    cor = models.CharField(verbose_name='Cor', max_length=7)
 
     class Meta:
         verbose_name = 'Tipo'
@@ -46,6 +47,7 @@ class Lista(models.Model):
 
 class Produto(models.Model):
     nome = models.CharField(verbose_name='Nome', max_length=50)
+    numero = models.IntegerField(verbose_name='N', validators=[MaxValueValidator(10000)])
     tipo = models.ForeignKey(Tipo, verbose_name='Tipo', max_length=50, on_delete=models.PROTECT,
                              related_name='produtos')
     unidade_contagem = models.ForeignKey(Unidade, verbose_name='Unidade contagem', max_length=2,
@@ -62,6 +64,7 @@ class Produto(models.Model):
     qtd = models.IntegerField(verbose_name='Quantidade', default=0)
     contagem = models.IntegerField(verbose_name='Contagem', default=0)
     media = models.IntegerField(verbose_name='Média', validators=[MaxValueValidator(10000)])
+    requisicao = models.IntegerField(verbose_name='Requisição', validators=[MaxValueValidator(10000)])
     comprar = models.IntegerField(verbose_name='Comprar', blank=True, default=0, editable=False)
     ativo = models.BooleanField(verbose_name='Ativo', default=True)
     created = models.DateTimeField(verbose_name='Criado em', auto_now_add=True)
@@ -117,7 +120,7 @@ class Contagem(models.Model):
 
     @property
     def ordena_produtos(self):
-        return self.produtos.all().order_by('tipo__nome', 'nome')
+        return self.produtos.all().order_by('tipo__nome', 'departamento__nome')
 
     def __str__(self):
         return self.nome

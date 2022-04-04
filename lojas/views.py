@@ -80,12 +80,14 @@ class Imprimir(PDFView):
         """Pass some extra context to the template."""
         context = super().get_context_data(*args, **kwargs)
         slug = self.kwargs['slug']
+        tipo = self.kwargs['tipo']
         # comprar = self.request.GET.getlist('comprar')
         produtos = []
         for obj in self.request.GET.lists():
             if 'on' in obj[1]:
-                produto = Produto.objects.get(id=int(obj[0]))
+                produto = Produto.objects.filter(nome=obj[0], tipo__nome=tipo.upper()).first()
                 produto.comprar = obj[1][2]
+                produto.media = obj[1][3]
                 produtos.append(produto)
         if slug == 'total':
             context['loja'] = 'TOTAL'
@@ -95,6 +97,7 @@ class Imprimir(PDFView):
             # context['produtos'] = Produto.objects.filter(loja__slug=slug).order_by('tipo__nome', 'nome')
             context['produtos'] = produtos
             context['data'] = datetime.datetime.now()
+            context['tipo'] = tipo
 
         return context
 

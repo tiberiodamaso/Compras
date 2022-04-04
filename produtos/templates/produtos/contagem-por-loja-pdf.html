@@ -46,15 +46,17 @@
               <thead>
               <tr>
                 <th scope="col">TIPO</th>
+                <th scope="col">DPT</th>
                 <th scope="col">PRODUTO</th>
-                <th scope="col">QUANTIDADE</th>
-                <th scope="col">UNIDADE</th>
+                <th scope="col">QTD</th>
+                <th scope="col">UND</th>
               </tr>
               </thead>
               <tbody>
               {% for produto in contagem.ordena_produtos %}
               <tr>
                 <td>{{produto.tipo}}</td>
+                <td>{{produto.departamento.nome}}</td>
                 <td style="text-align: left !important;">{{produto.nome}}</td>
                 <td>{{produto.contagem}}</td>
                 <td>{{produto.unidade_contagem}}</td>

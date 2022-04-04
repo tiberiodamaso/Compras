@@ -31,15 +31,16 @@
         </div>
       </div>
     </div>
-    <form id="listaDeComprasForm" action="{% url 'lojas:imprimir' slug %}">
+    <form id="listaDeComprasForm" action="{% url 'lojas:imprimir' slug tipo %}">
       {% for produto in produtos %}
       <div id="{{produto.nome|slugify}}" class="container border-bottom pt-3">
         <div class="card border-0 mb-3">
           <div class="row g-0">
             <div class="col-6">
               <div>
-                <h5 class="card-title fs-6" style="color: #aa4d37;">{{ produto.nome }}</h5>
-                <p class="card-text text-muted small">{{produto.departamento.nome}} | {{ produto.unidade_contagem }}</p>
+                <h5 class="card-title fs-6" style="color: #aa4d37;">{{ produto.nome|upper }}</h5>
+                <p class="card-text text-muted small m-0">Contagem em: {{ produto.unidade_contagem__nome }}</p>
+                <p class="card-text text-muted small m-0">Comprar em: {{ produto.unidade_compra__nome }}</p>
               </div>
             </div >
             <div class="col-2 text-center">
@@ -54,18 +55,19 @@
             </div>
           </div>
           <div class="row pt-3 align-items-center g-0">
-            <div class="col-10">
+            <div class="col-9">
               <div class="form-check">
-                <input class="form-check-input customCheckBox" name="{{produto.id}}" type="checkbox" id="id-{{produto.id}}" checked onclick="check(this)">
-                <input type="hidden" class="d-none" name="{{produto.id}}" value="{{produto.id}}">
-                <label class="form-check-label text-muted" for="id-{{produto.id}}">
-                  Comprar | {{produto.unidade_compra}}
+                <input class="form-check-input customCheckBox" name="{{produto.nome}}" type="checkbox" id="id-{{produto.nome}}" checked onclick="check(this)">
+                <input type="hidden" class="d-none" name="{{produto.nome}}" value="{{produto.nome}}">
+                <label class="form-check-label text-muted" for="id-{{produto.nome}}">
+                  Comprar
                 </label>
               </div>
             </div>
 
-            <div class="col-2 text-center">
-              <input name="{{produto.id}}" id="qtd" type="text" class="border-1 form-control text-center qtd" value="{{produto.comprar|floatformat:'0'}}">
+            <div class="col-3 text-center">
+              <input name="{{produto.nome}}" id="qtd" type="text" class="border-1 form-control text-center qtd" value="{{produto.comprar|floatformat:'0'}}">
+              <input name="{{produto.nome}}" id="media" type="text" class="d-none" value="{{produto.media|floatformat:'0'}}">
             </div>
           </div>
         </div>

@@ -14,18 +14,18 @@
     
     <!--CARDS-->
     <h2 class="pb-1 text-center text-secondary">CONTAGEM</h2>
-    <h5 class="pb-4 text-center text-secondary">{{loja}} — {{departamento|capfirst}}</h5>
+    <h5 class="pb-4 text-center text-secondary">{{departamento|capfirst}}</h5>
     {% include 'core/alertas.html' %}
     <form id="produtosForm" method="post">
       {% csrf_token %}
       {% for produto in produtos %}
-      <div id="{{produto.nome|slugify}}" class="container border-bottom border-light py-3" style="background-color:{{ produto.area.cor }};">
-        <div class="card border-0 mb-3" style="background-color:{{ produto.area.cor }};">
+      <div id="{{produto.nome|slugify}}" class="container border-bottom border-light py-3" style="background-color:{{ produto.tipo.cor }};">
+        <div class="card border-0 mb-3" style="background-color:{{ produto.tipo.cor }};">
           <div class="row g-0">
             <div class="col-9 px-2 btnMais" onclick="count(this, 'title')">
               <div>
-                <h5 class="card-title text-dark">{{ produto.nome }}</h5>
-                <p class="card-text text-muted fs-6">{{produto.area}}</p>
+                <h5 class="card-title text-dark">{{ produto.nome|upper }}</h5>
+                <p class="card-text text-muted fs-6">{{produto.tipo}}</p>
 <!--                <input type="range" class="form-range" min="0" max="100" step="1" oninput="range(this)">-->
               </div>
             </div >
