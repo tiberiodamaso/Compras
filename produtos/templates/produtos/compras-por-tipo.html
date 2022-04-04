@@ -31,7 +31,8 @@
         </div>
       </div>
     </div>
-    <form id="listaDeComprasForm" action="{% url 'lojas:imprimir' slug tipo %}">
+    <form id="listaDeComprasForm" action="{% url 'lojas:imprimir' slug tipo %}" method="post">
+      {% csrf_token %}
       {% for produto in produtos %}
       <div id="{{produto.nome|slugify}}" class="container border-bottom pt-3">
         <div class="card border-0 mb-3">

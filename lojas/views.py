@@ -76,6 +76,15 @@ class Imprimir(PDFView):
     """
     A PDFView behaves pretty much like a TemplateView, so you can treat it as such.
     """
+
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data(*args, **kwargs)
+        return self.render(
+            request=request,
+            template=self.get_template_names(),
+            context=context,
+        )
+
     def get_context_data(self, *args, **kwargs):
         """Pass some extra context to the template."""
         context = super().get_context_data(*args, **kwargs)
@@ -83,7 +92,7 @@ class Imprimir(PDFView):
         tipo = self.kwargs['tipo']
         # comprar = self.request.GET.getlist('comprar')
         produtos = []
-        for obj in self.request.GET.lists():
+        for obj in self.request.POST.lists():
             if 'on' in obj[1]:
                 produto = Produto.objects.filter(nome=obj[0], tipo__nome=tipo.upper()).first()
                 produto.comprar = obj[1][2]
