@@ -36,7 +36,7 @@ class TiposDeProdutos(ListView):
     template_name = 'produtos/tipos-de-produtos.html'
 
     def get_queryset(self):
-        return Tipo.objects.all().order_by('nome')
+        return Tipo.objects.all().order_by('nome').exclude(nome='PROCESSADOS')
 
     def get_context_data(self, **kwargs):
         context = super(TiposDeProdutos, self).get_context_data(**kwargs)
