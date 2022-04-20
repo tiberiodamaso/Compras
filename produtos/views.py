@@ -156,17 +156,17 @@ def cadastra_produtos_planilha(request):
         data = request.FILES
         produtos_a_cadastrar = read_csv(data)
         for index, produto in enumerate(produtos_a_cadastrar):
-            nome = produto['PRODUTO'].upper()
+            nome = produto['PRODUTO'].upper().strip()
             numero = produto['N']
-            tipo = Tipo.objects.get(nome=produto['TIPO'])
-            loja = Loja.objects.get(nome=produto['LOJA'])
-            departamento = Departamento.objects.get(nome=produto['DEPARTAMENTO'], loja=loja)
-            area = Area.objects.get(nome=produto['AREA'])
-            unidade_contagem = Unidade.objects.get(nome=produto['UNIDADE DE CONTAGEM'])
-            unidade_compra = Unidade.objects.get(nome=produto['UNIDADE DE COMPRA'])
-            lista = Lista.objects.get(nome=produto['LOJA'])
-            media = produto['MÉDIA DE COMPRA']
-            requisicao = produto['MÉDIA DE REQUISIÇÃO']
+            tipo = Tipo.objects.get(nome=produto['TIPO'].strip().upper())
+            loja = Loja.objects.get(nome=produto['LOJA'].strip().upper())
+            departamento = Departamento.objects.get(nome=produto['DEPARTAMENTO'].strip().upper(), loja=loja)
+            area = Area.objects.get(nome=produto['AREA'].strip().upper())
+            unidade_contagem = Unidade.objects.get(nome=produto['UNIDADE CONTAGEM'].strip().upper())
+            unidade_compra = Unidade.objects.get(nome=produto['UNIDADE COMPRA'].strip().upper())
+            lista = Lista.objects.get(nome=produto['LOJA'].strip().upper())
+            media = float(produto['MÉDIA DE COMPRA'].replace(',', '.'))
+            requisicao = int(produto['MÉDIA DE REQUISIÇÃO'])
             Produto.objects.update_or_create(nome=nome, numero=numero, tipo=tipo, unidade_contagem=unidade_contagem,
                                              unidade_compra=unidade_compra, loja=loja, departamento=departamento,
                                              area=area, lista=lista, media=media, requisicao=requisicao)

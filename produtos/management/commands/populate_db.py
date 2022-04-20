@@ -4,16 +4,17 @@ from django.utils import timezone
 from lojas.models import Departamento, Loja, Area
 from produtos.models import Produto, Lista, Unidade, Tipo
 
-UNIDADES = ['BALDE 1,3KG', 'BARRA 3KG', 'BARRA 4KG', 'BARRA 7KG', 'BISNAGA', 'CX', 'CX 20', 'CX 25', 'CX 12', 'CX 12KG', 'CX 14', 'CX 15', 'CX 15KG',
-'CX 16', 'CX 2', 'CX 200', 'CX 2000', 'CX 20KG', 'CX 22', 'CX 24', 'CX 27', 'CX 2 BARRAS', 'CX 30', 'CX 300', 'CX 4', 'CX 40', 'CX 5', 'CX 5KG', 'CX 6', 'CX 6KG',
-'CX 7', 'CX 7KG', 'CX 700', 'CX 8', 'FD', 'FD 6', 'FD 10', 'FD 100', 'FD 12', 'FD 24', 'FD 30', 'FD 5', 'KG', 'MILHEIRO', 'PCT 10', 'PCT 100', 'PCT 12', 'PCT 25', 'PCT 500G', 'PCT 5KG',
-'PCT 6', 'PCT 6 UND', 'PÇ 7KG', 'RODELA 6 UND', 'ROLO', 'ROLO 500 UND', 'SACO', 'UND', 'UND 400G']
+UNIDADES = ['BARRA', 'BARRA 1 KG', 'BARRA 3 KG', 'BARRA 4 KG', 'BARRA 7 KG', 'CX', 'CX 8', 'CX 10', 'CX 10KG', 'CX 12', 'CX 12KG', 'CX 12 UND', 'CX 12,5', 'CX 14KG',
+'CX 15', 'CX 15KG', 'CX 16', 'CX 20', 'CX 20KG', 'CX 200', 'CX 200 UND', 'CX 2000', 'CX 24', 'CX 24 UND', 'CX 25', 'CX 25 UND', 'CX 250 UND', 'CX 27', 'CX 27 UND',
+'CX 30', 'CX 320 UND', 'CX 40', 'CX 40 UND', 'CX 400 UND', 'CX 48', 'CX 5 KG', 'CX 500', 'CX 500 UND', 'CX 5000', 'CX 515 KG', 'CX 6', 'CX 700 UND', 'CX 8', 'CX 25',
+'FD 10', 'FD 10 OU 30', 'FD 12', 'FD 24', 'FD 30', 'FD 30 OU 10', 'FD 6', 'FD 60', 'KG', 'MILHEIRO', 'PCT', 'PCT 10', 'PCT 100', 'PCT 1000', 'PCT 60', 'RI 20', 
+'ROLO', 'TI 30', 'UND', 'UND 7 KG'] 
 
-TIPOS = ['ATACADO', 'BEBIDAS', 'DIVERSOS', 'EMBALAGEM', 'IN NATURA', 'POLPAS', 'PROCESSADOS', 'VINHOS']
+TIPOS = ['ATACADO', 'BEBIDAS', 'DIVERSOS', 'EMBALAGEM', 'IN NATURA', 'POLPAS', 'PRODUÇÃO', 'VINHOS', 'AÇOUGUE']
 LOJAS = ['MARISTA', 'PASSEIO', 'FÁBRICA']
 LISTAS = ['MARISTA', 'PASSEIO']
 DEPARTAMENTOS = ['BAR', 'COZINHA', 'DEMAIS', 'DEPÓSITO']
-AREAS = ['BEBIDAS', 'CÂMARA CONGELADA', 'CÂMARA RESFRIADA', 'POLPAS', 'SECOS', 'VINHOS']
+AREAS = ['BEBIDAS', 'CÂMARA CONGELADA', 'CÂMARA RESFRIADA', 'POLPAS', 'SECOS', 'VINHOS', 'IN NATURA']
 
 class Command(BaseCommand):
 

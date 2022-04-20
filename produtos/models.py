@@ -63,7 +63,7 @@ class Produto(models.Model):
     area = models.ForeignKey(Area, verbose_name='Área', on_delete=models.PROTECT, related_name='produtos')
     qtd = models.IntegerField(verbose_name='Quantidade', default=0)
     contagem = models.IntegerField(verbose_name='Contagem', default=0)
-    media = models.IntegerField(verbose_name='Média', validators=[MaxValueValidator(10000)])
+    media = models.FloatField(verbose_name='Média', validators=[MaxValueValidator(10000)])
     requisicao = models.IntegerField(verbose_name='Requisição', validators=[MaxValueValidator(10000)])
     comprar = models.IntegerField(verbose_name='Comprar', blank=True, default=0, editable=False)
     ativo = models.BooleanField(verbose_name='Ativo', default=True)
@@ -73,7 +73,7 @@ class Produto(models.Model):
     class Meta:
         verbose_name = 'Produto'
         verbose_name_plural = 'Produtos'
-        ordering = ['tipo', 'loja', 'nome']
+        ordering = ['numero', 'tipo', 'loja', 'nome']
         unique_together = ('nome', 'tipo', 'loja', 'departamento', 'area')
 
     def __str__(self):
@@ -96,10 +96,10 @@ class Produto(models.Model):
         return pesquisa
 
     def calcula_comprar(self):
-        if self.qtd > self.media:
+        if int(self.qtd) > int(self.media):
             comprar = 0
         else:
-            comprar = self.media - self.qtd
+            comprar = int(self.media) - int(self.qtd)
         return comprar
 
     def save(self, *args, **kwargs):
