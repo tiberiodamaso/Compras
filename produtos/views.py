@@ -101,7 +101,7 @@ def finalizar_contagem(request, slug, nome):
         for index, produto_id in enumerate(data.getlist('id')):
             produto = Produto.objects.get(id=produto_id)
             contagem.produtos.add(produto)
-            produto.qtd = int(data.getlist('qtd')[index])
+            produto.qtd = float(data.getlist('qtd')[index])
             produto.contagem = produto.qtd
             produto.save()
             # contagem.save()

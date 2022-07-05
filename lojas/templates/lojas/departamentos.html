@@ -15,15 +15,15 @@
       <div class="card mx-2 text-center" style="width: 45%;">
       <a href="{% url 'lojas:contagem' departamento.loja.slug departamento.nome|lower %}" class="text-decoration-none text-black pt-2">
         {% if departamento.nome == 'COZINHA' %}
-          <i class="icofont-chef text-center" style="font-size: 3rem !important; color: #aa4d37;"></i>
+          <i class="bi bi-cloud-fog text-center" style="font-size: 3rem !important; color: #aa4d37;"></i>
         {% elif departamento.nome == 'BAR' %}
-          <i class="icofont-beer text-center" style="font-size: 3rem !important; color: #aa4d37;"></i>
+          <i class="bi bi-cup-straw text-center" style="font-size: 3rem !important; color: #aa4d37;"></i>
         {% elif departamento.nome == 'FÁBRICA' %}
-          <i class="icofont-cubes text-center" style="font-size: 3rem !important; color: #aa4d37;"></i>
+          <i class="bi bi-house-door text-center" style="font-size: 3rem !important; color: #aa4d37;"></i>
         {% elif departamento.nome == 'DEPÓSITO' %}
-          <i class="icofont-box text-center" style="font-size: 3rem !important; color: #aa4d37;"></i>
+          <i class="bi bi-box-seam text-center" style="font-size: 3rem !important; color: #aa4d37;"></i>
         {% elif departamento.nome == 'DEMAIS' %}
-          <i class="icofont-ui-home text-center" style="font-size: 3rem !important; color: #aa4d37;"></i>
+          <i class="bi bi-boxes text-center" style="font-size: 3rem !important; color: #aa4d37;"></i>
         {% endif %}
         <div class="card-body text-center">
           <p class="card-title" style="color: #aa4d37;">{{departamento.nome}}</p>
